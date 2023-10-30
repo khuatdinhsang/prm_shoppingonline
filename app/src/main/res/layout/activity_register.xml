@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.Register">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="173dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="84dp"
+        android:text="@string/register"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/register_edtEmail"
+        android:layout_width="372dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="32dp"
+        android:autofillHints="no"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="text"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:ignore="TextFields" />
+
+    <EditText
+        android:id="@+id/register_edtPassword"
+        android:layout_width="372dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="40dp"
+        android:autofillHints="no"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_edtEmail"
+        tools:ignore="MissingConstraints" />
+    <EditText
+        android:id="@+id/register_edtConfirmPassword"
+        android:layout_width="372dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="40dp"
+        android:autofillHints="no"
+        android:ems="10"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_edtPassword"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <Button
+        android:id="@+id/regsiter_btnRegister"
+        android:layout_width="372dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/button_primary"
+        android:radius="5dp"
+        android:text="@string/register"
+        android:textColor="#F8F8F8"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_edtConfirmPassword"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/register_textLogin"
+        android:layout_width="372dp"
+        android:layout_height="46dp"
+        android:text="You already have an account ? Login now!"
+        android:textColor="#858383"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/regsiter_btnRegister"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/register_edtConfirmPassword"
+        app:layout_constraintVertical_bias="0.537" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

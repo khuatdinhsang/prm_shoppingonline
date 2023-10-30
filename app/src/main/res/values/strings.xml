@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">shopping_online_prm392</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register">Register</string>
+    <string name="managerAccount">ManagerAccount</string>
+    <string name="mangerCategory">ManagerCategory</string>s
+    <string name="saving">Saving...</string>
+    <string name="mangerProduct">ManagerProduct</string>
+    <string name="logout">Logout</string>
+    <string name="login">Login</string>
+
+</resources>
