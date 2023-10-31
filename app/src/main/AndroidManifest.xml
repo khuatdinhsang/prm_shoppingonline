@@ -16,7 +16,7 @@
             android:name=".activity.ManagerCategory"
             android:exported="false" />
         <activity
-            android:name=".activity.Login"
+            android:name=".activity.Register"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -24,9 +24,10 @@
         <activity
             android:name=".activity.ManagerAccount"
             android:exported="false" />
+
 <!--        activity.Login  .activity.ManagerAccount .activity.Register -->
         <activity
-            android:name=".activity.Register"
+            android:name=".activity.Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
