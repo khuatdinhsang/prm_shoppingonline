@@ -1,5 +1,9 @@
 package com.example.shopping_online_prm392.utils;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 
 import com.example.shopping_online_prm392.common.TableName;
@@ -9,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +57,5 @@ public class Utils {
         });
         return listAccount;
     }
-
 
 }

@@ -10,5 +10,7 @@
     <string name="mangerProduct">ManagerProduct</string>
     <string name="logout">Logout</string>
     <string name="login">Login</string>
+    <string name="home">Home</string>
+    <string name="remember_account">Remember Account</string>
 
 </resources>
