@@ -467,6 +467,7 @@
         android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/home_bottomNavigation"
         app:menu="@menu/menu" />
 
 
