@@ -7,14 +7,14 @@ public class Product {
     private int price;
     private  String size;
     private String color;
-    private String image;
+    private int image;
     private Category category;
     private String description;
 
     public Product() {
     }
 
-    public Product(String id, String name, int quantity, int price, String size, String color, String image, Category category, String description) {
+    public Product(String id, String name, int quantity, int price, String size, String color, int image, Category category, String description) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -74,11 +74,11 @@ public class Product {
         this.color = color;
     }
 
-    public String getImage() {
+    public int getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(int image) {
         this.image = image;
     }
 
