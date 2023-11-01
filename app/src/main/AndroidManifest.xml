@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Shopping_online_prm392"
         tools:targetApi="31">
         <activity
+            android:name=".activity.Setting"
+            android:exported="false" />
+        <activity
+            android:name=".activity.Profile"
+            android:exported="false" />
+        <activity
             android:name=".activity.ManagerCategory"
             android:exported="false" />
         <activity
@@ -24,8 +30,9 @@
         <activity
             android:name=".activity.ManagerAccount"
             android:exported="false" />
-
-<!--        activity.Login  .activity.ManagerAccount .activity.Register -->
+        <activity
+            android:name=".activity.Product"
+            android:exported="false" /> <!-- activity.Login  .activity.ManagerAccount .activity.Register -->
         <activity
             android:name=".activity.Login"
             android:exported="true">
