@@ -73,29 +73,34 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Product.class);
         startActivity(intent);
         finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     private void homeActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
     private void settingActivity() {
         Intent intent = new Intent(this, Setting.class);
         startActivity(intent);
         finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     private void cartActivity() {
         Intent intent = new Intent(this, Cart.class);
         startActivity(intent);
         finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     private void profileActivity() {
         Intent intent = new Intent(this, Profile.class);
         startActivity(intent);
         finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
 
