@@ -20,6 +20,7 @@
         android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/home_bottomNavigation"
         app:menu="@menu/menu" />
 
     <ImageView
@@ -72,7 +73,7 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/viewAll"
+        android:id="@+id/home_viewAll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="328dp"

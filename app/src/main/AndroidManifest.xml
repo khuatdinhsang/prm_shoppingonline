@@ -24,6 +24,9 @@
         <activity
             android:name=".activity.ManagerAccount"
             android:exported="false" />
+        <activity
+            android:name=".activity.Product"
+            android:exported="false" />
 
 <!--        activity.Login  .activity.ManagerAccount .activity.Register -->
         <activity
