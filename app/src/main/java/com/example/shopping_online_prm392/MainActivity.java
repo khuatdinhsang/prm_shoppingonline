@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.shopping_online_prm392.activity.Product;
+import com.example.shopping_online_prm392.activity.Profile;
+import com.example.shopping_online_prm392.activity.Setting;
 import com.example.shopping_online_prm392.adapter.SlideAdapter;
 import com.example.shopping_online_prm392.model.Slide;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
@@ -67,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void settingActivity() {
-
+        Intent intent = new Intent(this, Setting.class);
+        startActivity(intent);
     }
 
     private void cartActivity() {
@@ -76,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void profileActivity() {
+        Intent intent = new Intent(this, Profile.class);
+        startActivity(intent);
     }
 
 
