@@ -1,12 +1,17 @@
 package com.example.shopping_online_prm392.activity;
 
+import static com.example.shopping_online_prm392.common.ShowDialog.showMessage;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,10 +25,13 @@ import com.example.shopping_online_prm392.R;
 import com.example.shopping_online_prm392.common.ShowDialog;
 import com.example.shopping_online_prm392.common.TableName;
 import com.example.shopping_online_prm392.model.Account;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.normal.TedPermission;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -78,8 +86,61 @@ public class Profile extends AppCompatActivity {
             }
         });
         btnLogout.setOnClickListener(this::logout);
+        profile_image.setOnClickListener(this::uploadProfileImg);
+    }
+
+    private void uploadProfileImg(View view) {
+//        Log.i("5","9");
+        OpenImagePicker();
+//        requestPermissions();
+    }
+
+    private void requestPermissions() {
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                OpenImagePicker();
+            }
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                showMessage(Profile.this, "Permission Denied\n" + deniedPermissions.toString());
+            }
+        };
+        TedPermission.create()
+                .setPermissionListener(permissionlistener)
+                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .check();
+    }
+    private void OpenImagePicker() {
+        ImagePicker.with(this)
+                .crop()	    			//Crop image(Optional), Check Customization for more option
+                .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                .start();
+    }
+    @Override
+    protected  void onActivityResult(int requestCode, int  resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Uri uri=data.getData();
+        if (uri!=null){
+            profile_image.setImageURI(uri);
+            currentAccount.setImage(String.valueOf(uri));
+            DatabaseReference myRef = firebaseDatabase.getReference(TableName.ACCOUNT_TABLE);
+            myRef.child(currentAccount.getId()).setValue(currentAccount);
+            SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            Gson gson = new Gson();
+            String userJson = gson.toJson(currentAccount);
+            editor.putString("currentAccount", userJson);
+            editor.apply();
+            showMessage(Profile.this,"Avatar change Successfully");
+        } else{
+            showMessage(Profile.this,"Avatar change Failed");
+        }
 
     }
+
 
     private void logout(View view) {
         ShowDialog.showConfirmationDialog(Profile.this, "Do you want to logout!",
@@ -94,7 +155,7 @@ public class Profile extends AppCompatActivity {
                         DatabaseReference myRef = firebaseDatabase.getReference(TableName.ACCOUNT_TABLE);
                         myRef.child(currentAccount.getId()).setValue(currentAccount);
                         loginActivity();
-                        ShowDialog.showMessage(Profile.this, "Logout Successfully!");
+                        showMessage(Profile.this, "Logout Successfully!");
                     }
 
                     @Override
@@ -109,7 +170,7 @@ public class Profile extends AppCompatActivity {
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
         String accountJson = sharedPreferences.getString("currentAccount", "");
-        if (accountJson.equals("")) {
+        if (accountJson.isEmpty()) {
             loginActivity();
         } else {
             currentAccount = gson.fromJson(accountJson, Account.class);

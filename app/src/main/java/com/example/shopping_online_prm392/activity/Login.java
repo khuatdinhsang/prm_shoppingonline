@@ -72,12 +72,11 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void saveOnSharedPreferences(String name, Account string, String key) {
+    public void saveOnSharedPreferences(String name, Account string, String key) {
         SharedPreferences sharedPreferences = getSharedPreferences(name, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String userJson = gson.toJson(string);
-        Log.i("1", userJson);
         editor.putString(key, userJson);
         editor.apply();
     }
