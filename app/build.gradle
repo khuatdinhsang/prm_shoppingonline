@@ -35,9 +35,11 @@ dependencies {
     implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2'
+    implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
     implementation("com.google.firebase:firebase-database")
     implementation(platform("com.google.firebase:firebase-bom:32.4.0"))
+    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation("com.google.firebase:firebase-analytics")
     implementation 'androidx.navigation:navigation-fragment:2.7.4'
     implementation 'me.relex:circleindicator:2.1.6'

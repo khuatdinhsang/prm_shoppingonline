@@ -12,7 +12,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+<<<<<<< HEAD
 import com.example.shopping_online_prm392.activity.CartActivity;
+=======
+import com.example.shopping_online_prm392.activity.Cart;
+>>>>>>> 41e4163c5af33f1f19974da5cffc7a4f697cc212
 import com.example.shopping_online_prm392.activity.Product;
 import com.example.shopping_online_prm392.activity.Profile;
 import com.example.shopping_online_prm392.activity.Setting;
@@ -29,6 +33,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView ;
     private MenuItem btnCart;
+    private MenuItem btnHome;
     private MenuItem btnSetting;
     private MenuItem btnProfile;
     private TextView viewAllNewProduct;
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         btnCart = bottomNavigationView.getMenu().findItem(R.id.cart_Bottomnavigation);
         btnSetting = bottomNavigationView.getMenu().findItem(R.id.setting_Bottomnavigation);
         btnProfile = bottomNavigationView.getMenu().findItem(R.id.profile_Bottomnavigation);
+        btnHome = bottomNavigationView.getMenu().findItem(R.id.home_bottomNavigation);
         viewAllNewProduct = findViewById(R.id.home_viewAll);
         firebaseDatabase = FirebaseDatabase.getInstance();
     }
@@ -51,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
                     case "Cart":
                         cartActivity();
                         break;
+//                    case "Home":
+//                        homeActivity();
+//                        break;
                     case "Profile":
                         profileActivity();
                         break;
@@ -67,21 +76,35 @@ public class MainActivity extends AppCompatActivity {
     private void viewAllHomeActivity(View view) {
         Intent intent = new Intent(this, Product.class);
         startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
+    private void homeActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
     private void settingActivity() {
         Intent intent = new Intent(this, Setting.class);
         startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     private void cartActivity() {
         Intent intent = new Intent(this, CartActivity.class);
         startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     private void profileActivity() {
         Intent intent = new Intent(this, Profile.class);
         startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
 
