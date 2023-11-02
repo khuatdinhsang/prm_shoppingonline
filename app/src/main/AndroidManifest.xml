@@ -47,7 +47,14 @@
             android:name=".activity.Product"
             android:exported="false" /> <!-- activity.Login  .activity.ManagerAccount .activity.Register -->
         <activity
+<<<<<<< HEAD
             android:name=".MainActivity"
+=======
+            android:name=".activity.CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.Login"
+>>>>>>> 6d908095338948ed144cad49ab997818777fd826
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
