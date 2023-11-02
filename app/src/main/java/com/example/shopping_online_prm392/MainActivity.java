@@ -12,11 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-<<<<<<< HEAD
 import com.example.shopping_online_prm392.activity.CartActivity;
-=======
-import com.example.shopping_online_prm392.activity.Cart;
->>>>>>> 41e4163c5af33f1f19974da5cffc7a4f697cc212
+
 import com.example.shopping_online_prm392.activity.Product;
 import com.example.shopping_online_prm392.activity.Profile;
 import com.example.shopping_online_prm392.activity.Setting;
