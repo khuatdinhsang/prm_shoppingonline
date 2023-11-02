@@ -27,13 +27,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public CartAdapter.CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Bind Item view holder to parent
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_product,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart_layout,parent,false);
         return new CartViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.CartViewHolder holder, int position) {
     // Bind data to card
+
 
     }
 
@@ -60,10 +61,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             quantityProduct = itemView.findViewById(R.id.quantity_product);
             productName = itemView.findViewById(R.id.product_name);
         }
-        public void SetData(Product product,int quantity){
-            productImage.setImageResource(product.getImage());
-            productName.setText(product.getName());
-            quantityProduct.setText(quantity);
+        public void SetData(Cart cartModel){
+            productImage.setImageResource(cartModel.getProduct().getImage());
+            productName.setText(cartModel.getProduct().getName());
+            quantityProduct.setText(cartModel.getQuantity());
         }
 
     }

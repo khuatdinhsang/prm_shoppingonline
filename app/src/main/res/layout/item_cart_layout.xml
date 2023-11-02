@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/item_cart_bg"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    >
 <LinearLayout
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -15,13 +19,14 @@
         android:layout_height="150dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/shirt1"
-        tools:srcCompat="@drawable/shirt1" />
+        app:srcCompat="@drawable/shirt1" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="152dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/white"
+        >
 
         <TextView
             android:id="@+id/product_name"
@@ -37,12 +42,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+            <Button
                 android:id="@+id/decrease_btn"
-                android:layout_width="wrap_content"
+                android:layout_width="48dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/button_cart"
-                android:src="@drawable/baseline_remove_24"
+                android:background="@drawable/baseline_remove_24"
+
                 />
             <TextView
                 android:id="@+id/quantity_product"
@@ -54,13 +60,12 @@
                 android:textAlignment="center"
                 android:layout_marginTop="8dp"/>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <Button
                 android:id="@+id/increase_btn"
-                android:layout_width="wrap_content"
+                android:layout_width="48dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/button_cart"
-                android:src="@drawable/baseline_add_24"
-                />
+                android:background="@drawable/baseline_add_24"
+                android:src="@drawable/baseline_add_24" />
         </LinearLayout>
 
     </LinearLayout>
