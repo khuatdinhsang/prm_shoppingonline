@@ -1,11 +1,13 @@
 package com.example.shopping_online_prm392.model;
 
+import java.sql.Date;
+
 public class Payment {
     private String id;
     private Account account;
     private AddressShipping addressShipping;
     private Cart cart;
-
+    private Date date;
     public Payment() {
     }
 
