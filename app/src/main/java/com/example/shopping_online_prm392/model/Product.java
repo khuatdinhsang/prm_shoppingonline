@@ -6,7 +6,6 @@ public class Product {
     private int quantity;
     private int price;
     private  String size;
-    private String color;
     private String image;
     private Category category;
     private String description;
@@ -14,13 +13,12 @@ public class Product {
     public Product() {
     }
 
-    public Product(String id, String name, int quantity, int price, String size, String color, String image, Category category, String description) {
+    public Product(String id, String name, int quantity, int price, String size, String image, Category category, String description) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
         this.size = size;
-        this.color = color;
         this.image = image;
         this.category = category;
         this.description = description;
@@ -66,13 +64,6 @@ public class Product {
         this.size = size;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
 
     public String getImage() {
         return image;
@@ -106,7 +97,6 @@ public class Product {
                 ", quantity=" + quantity +
                 ", price=" + price +
                 ", size='" + size + '\'' +
-                ", color='" + color + '\'' +
                 ", image='" + image + '\'' +
                 ", category=" + category +
                 ", description='" + description + '\'' +
