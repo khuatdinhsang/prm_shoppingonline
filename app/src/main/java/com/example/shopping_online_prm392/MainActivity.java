@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     private void handleRecycleView(){
 
         for(int i=0; i<listProduct.size();i++){
-            cardItemList.add(new CardItem(listProduct.get(i).getImage(),listProduct.get(i).getName(), Integer.toString(listProduct.get(i).getPrice())));
+            cardItemList.add(new CardItem(listProduct.get(i).getId(),listProduct.get(i).getImage(),listProduct.get(i).getName(), Integer.toString(listProduct.get(i).getPrice())));
         }
 
         cartItemAdapter = new CardItemAdapter(cardItemList);
