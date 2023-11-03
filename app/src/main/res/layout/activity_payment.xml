@@ -391,7 +391,7 @@
                     android:textColor="#000"
                     android:textSize="18dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="240dp"
+                    android:layout_marginLeft="220dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -426,7 +426,7 @@
                     android:textColor="#000"
                     android:textSize="18dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="230dp"
+                    android:layout_marginLeft="210dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -453,7 +453,7 @@
                     android:textColor="#000"
                     android:textSize="18dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="220dp"
+                    android:layout_marginLeft="200dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />

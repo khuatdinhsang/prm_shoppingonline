@@ -1,16 +1,24 @@
 package com.example.shopping_online_prm392.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.UUID;
 
 public class Account implements Serializable {
+    @SerializedName("id")
     private String id;
+    @SerializedName("email")
     private String email;
+    @SerializedName("password")
     private String password;
+    @SerializedName("role")
 
     private String role;
+    @SerializedName("image")
 
     private String image;
+    @SerializedName("isLoggin")
     private boolean isLoggin ;
     public Account() {
     }

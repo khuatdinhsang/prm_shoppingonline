@@ -7,13 +7,13 @@ public class Product {
     private int price;
     private  String size;
     private String image;
-    private Category category;
+    private String category;
     private String description;
 
     public Product() {
     }
 
-    public Product(String id, String name, int quantity, int price, String size, String image, Category category, String description) {
+    public Product(String id, String name, int quantity, int price, String size, String image, String category, String description) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -73,11 +73,11 @@ public class Product {
         this.image = image;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 

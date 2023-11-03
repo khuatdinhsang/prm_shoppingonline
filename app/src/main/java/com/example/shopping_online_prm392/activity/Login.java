@@ -72,7 +72,7 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void saveOnSharedPreferences(String name, String string, String key) {
+    public void saveOnSharedPreferences(String name, Account string, String key) {
         SharedPreferences sharedPreferences = getSharedPreferences(name, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
@@ -119,7 +119,7 @@ public class Login extends AppCompatActivity {
             currentAccount.setLoggin(true);
             DatabaseReference myRef = firebaseDatabase.getReference(TableName.ACCOUNT_TABLE);
             myRef.child(currentAccount.getId()).setValue(currentAccount);
-            saveOnSharedPreferences("Account", String.valueOf(currentAccount), "currentAccount");
+            saveOnSharedPreferences("Account", currentAccount, "currentAccount");
             Toast.makeText(Login.this, "Login successfully", Toast.LENGTH_SHORT).show();
             Intent intent;
             if (currentAccount.getRole().equals("admin")) {

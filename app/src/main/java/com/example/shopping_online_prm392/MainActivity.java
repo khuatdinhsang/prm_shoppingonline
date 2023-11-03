@@ -2,6 +2,8 @@ package com.example.shopping_online_prm392;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -12,15 +14,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.shopping_online_prm392.activity.CardItemAdapter;
 import com.example.shopping_online_prm392.activity.Cart;
 import com.example.shopping_online_prm392.activity.Product;
 import com.example.shopping_online_prm392.activity.Profile;
 import com.example.shopping_online_prm392.activity.Setting;
 import com.example.shopping_online_prm392.adapter.SlideAdapter;
+import com.example.shopping_online_prm392.common.TableName;
+import com.example.shopping_online_prm392.model.CardItem;
 import com.example.shopping_online_prm392.model.Slide;
+import com.example.shopping_online_prm392.utils.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +43,13 @@ public class MainActivity extends AppCompatActivity {
     private MenuItem btnSetting;
     private MenuItem btnProfile;
     private TextView viewAllNewProduct;
+    private Utils utils = new Utils();
+    private RecyclerView recyclerView;
+    private CardItemAdapter cartItemAdapter;
+    private List<CardItem> cardItemList;
     private FirebaseDatabase firebaseDatabase;
+    private List<com.example.shopping_online_prm392.model.Product> listShirt;
+    private List<com.example.shopping_online_prm392.model.Product> listProduct;
     private void bindingView(){
         bottomNavigationView = findViewById(R.id.home_bottomNavigation);
         btnCart = bottomNavigationView.getMenu().findItem(R.id.cart_Bottomnavigation);
@@ -67,6 +83,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         viewAllNewProduct.setOnClickListener(this::viewAllHomeActivity);
+    }
+
+    private void handleRecycleView(){
+        bindingViewProductByCategory();
+        recyclerView = findViewById(R.id.recycler_view_home);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        cardItemList = new ArrayList<>();
+
+        for(int i=0; i<listProduct.size();i++){
+             cardItemList.add(new CardItem("","Quan dai","200$"));
+             cardItemList.add(new CardItem("",listProduct.get(i).getName(), Integer.toString(listShirt.get(i).getPrice())));
+        }
+        cardItemList.add(new CardItem("","Quan dui","200$"));
+        cardItemList.add(new CardItem("","Quan dui","200$"));
+        cardItemList.add(new CardItem("","Quan dui","200$"));
+        cardItemList.add(new CardItem("","Quan dui","200$"));
+        cardItemList.add(new CardItem("","Quan dui","200$"));
+
+        cartItemAdapter = new CardItemAdapter(cardItemList);
+        recyclerView.setAdapter(cartItemAdapter);
+
     }
 
     private void viewAllHomeActivity(View view) {
@@ -103,6 +142,13 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
+    private void bindingViewProductByCategory(){
+//        listShirt = utils.getListProductByCategory("250606aa-7960-11ee-b962-0242ac120002");
+        listProduct = new ArrayList<>();
+        listProduct = utils.getAllProducts();
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         bindingView();
         bindingAction();
+        handleRecycleView();
 
     }
 }
