@@ -63,24 +63,7 @@ public class Utils {
         return listAccount;
     }
     public List<Product> getAllProducts(){
-        listProduct = new ArrayList<>();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = firebaseDatabase.getReference(TableName.PRODUCT_TABLE);
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                   Product product = dataSnapshot.getValue(Product.class);
-                    listProduct.add(product);
-                }
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
             return listProduct;
     }
 

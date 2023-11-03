@@ -58,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
         btnHome = bottomNavigationView.getMenu().findItem(R.id.home_bottomNavigation);
         viewAllNewProduct = findViewById(R.id.home_viewAll);
         firebaseDatabase = FirebaseDatabase.getInstance();
+        recyclerView = findViewById(R.id.recycler_view_home);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        cardItemList = new ArrayList<>();
+        listProduct = new ArrayList<>();
     }
 
     private void bindingAction(){
@@ -86,22 +92,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleRecycleView(){
-        bindingViewProductByCategory();
-        recyclerView = findViewById(R.id.recycler_view_home);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        cardItemList = new ArrayList<>();
 
         for(int i=0; i<listProduct.size();i++){
              cardItemList.add(new CardItem("","Quan dai","200$"));
-             cardItemList.add(new CardItem("",listProduct.get(i).getName(), Integer.toString(listShirt.get(i).getPrice())));
+             cardItemList.add(new CardItem("",listProduct.get(i).getName(), Integer.toString(listProduct.get(i).getPrice())));
         }
-        cardItemList.add(new CardItem("","Quan dui","200$"));
-        cardItemList.add(new CardItem("","Quan dui","200$"));
-        cardItemList.add(new CardItem("","Quan dui","200$"));
-        cardItemList.add(new CardItem("","Quan dui","200$"));
-        cardItemList.add(new CardItem("","Quan dui","200$"));
 
         cartItemAdapter = new CardItemAdapter(cardItemList);
         recyclerView.setAdapter(cartItemAdapter);
@@ -144,8 +139,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void bindingViewProductByCategory(){
 //        listShirt = utils.getListProductByCategory("250606aa-7960-11ee-b962-0242ac120002");
-        listProduct = new ArrayList<>();
-        listProduct = utils.getAllProducts();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference(TableName.PRODUCT_TABLE);
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                    com.example.shopping_online_prm392.model.Product product = dataSnapshot.getValue(com.example.shopping_online_prm392.model.Product.class);
+                    Log.d("product", "onDataChange: " + product.getName());
+                    listProduct.add(product);
+                }
+            handleRecycleView();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 
@@ -156,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         bindingView();
         bindingAction();
-        handleRecycleView();
-
+        bindingViewProductByCategory();
     }
 }
