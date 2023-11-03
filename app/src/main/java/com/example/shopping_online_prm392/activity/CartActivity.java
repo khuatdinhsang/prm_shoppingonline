@@ -78,7 +78,7 @@ public class CartActivity extends AppCompatActivity {
                     cartProducts.add(c);
                 }
 
-                SaveAllToCart();
+                cartAdapter.notifyDataSetChanged();
             }
 
             @Override

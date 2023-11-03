@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.shopping_online_prm392.activity.CardItemAdapter;
 import com.example.shopping_online_prm392.activity.Cart;
+import com.example.shopping_online_prm392.activity.CartActivity;
 import com.example.shopping_online_prm392.activity.Product;
 import com.example.shopping_online_prm392.activity.Profile;
 import com.example.shopping_online_prm392.activity.Setting;
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void cartActivity() {
-        Intent intent = new Intent(this, Cart.class);
+        Intent intent = new Intent(this, CartActivity.class);
         startActivity(intent);
         finish();
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
