@@ -2,24 +2,37 @@ package com.example.shopping_online_prm392.activity;
 
 import static com.example.shopping_online_prm392.common.ShowDialog.showMessage;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cloudinary.android.MediaManager;
+import com.cloudinary.android.callback.ErrorInfo;
+import com.cloudinary.android.callback.UploadCallback;
 import com.example.shopping_online_prm392.MainActivity;
 import com.example.shopping_online_prm392.R;
 import com.example.shopping_online_prm392.common.ShowDialog;
@@ -34,10 +47,12 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.normal.TedPermission;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Profile extends AppCompatActivity {
-
+    private static final String TAG = "Upload ###";
     private FirebaseDatabase firebaseDatabase;
     private BottomNavigationView bottomNavigationView;
     private MenuItem btnCart;
@@ -50,6 +65,9 @@ public class Profile extends AppCompatActivity {
     private MenuItem btnProfile;
     private Dialog dialog;
     private Account currentAccount;
+    private CardView cvPassword;
+    private EditText edtOldPassword, edtNewPassword, edtReNewPassword;
+    private TextView changePas_showErr;
 
     private void bindingView() {
         bottomNavigationView = findViewById(R.id.home_bottomNavigation);
@@ -61,6 +79,7 @@ public class Profile extends AppCompatActivity {
         profile_gmail = findViewById(R.id.profile_gmail);
         profile_role = findViewById(R.id.profile_role);
         btnLogout = findViewById(R.id.profile_logout);
+        cvPassword=findViewById(R.id.profile_setting);
         firebaseDatabase = FirebaseDatabase.getInstance();
     }
 
@@ -87,30 +106,62 @@ public class Profile extends AppCompatActivity {
         });
         btnLogout.setOnClickListener(this::logout);
         profile_image.setOnClickListener(this::uploadProfileImg);
+        cvPassword.setOnClickListener(this::changePassword);
+    }
+
+    private void changePassword(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Profile.this);
+        // Get the layout inflater
+        LayoutInflater inflater = Profile.this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.change_password, null);
+        builder.setView(dialogView);
+        builder.setPositiveButton("Save",null);
+        builder.setNegativeButton("Cancel",null);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        edtOldPassword= dialogView.findViewById(R.id.oldPassword);
+        edtNewPassword=dialogView.findViewById(R.id.newPassword);
+        edtReNewPassword=dialogView.findViewById(R.id.ReNewPassword);
+        changePas_showErr=dialogView.findViewById(R.id.changePas_showErr);
+        Button positiveButton= alertDialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String oldPassword= String.valueOf(edtOldPassword.getText());
+                String newPassword= String.valueOf(edtNewPassword.getText());
+                String reNewPassword= String.valueOf(edtReNewPassword.getText());
+                if(oldPassword.equals("") || newPassword.equals("") ||reNewPassword.equals("")){
+                    changePas_showErr.setText("Please fill in all information!");
+                } else if (!newPassword.equals(reNewPassword)) {
+                    changePas_showErr.setText("Password not match confirmPassword!");
+                } else if (!oldPassword.equals(currentAccount.getPassword())){
+                    changePas_showErr.setText("Old Password not correct!");
+                } else{
+                    changePas_showErr.setText("");
+                    currentAccount.setPassword(newPassword);
+                    DatabaseReference myRef = firebaseDatabase.getReference(TableName.ACCOUNT_TABLE);
+                    myRef.child(currentAccount.getId()).setValue(currentAccount);
+                    SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    Gson gson = new Gson();
+                    String userJson = gson.toJson(currentAccount);
+                    editor.putString("currentAccount", userJson);
+                    editor.apply();
+                    alertDialog.dismiss();
+                    showMessage(Profile.this,"Password change Successfully");
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+
     }
 
     private void uploadProfileImg(View view) {
-//        Log.i("5","9");
         OpenImagePicker();
-//        requestPermissions();
-    }
-
-    private void requestPermissions() {
-        PermissionListener permissionlistener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                OpenImagePicker();
-            }
-            @Override
-            public void onPermissionDenied(List<String> deniedPermissions) {
-                showMessage(Profile.this, "Permission Denied\n" + deniedPermissions.toString());
-            }
-        };
-        TedPermission.create()
-                .setPermissionListener(permissionlistener)
-                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
-                .check();
     }
     private void OpenImagePicker() {
         ImagePicker.with(this)
@@ -135,6 +186,44 @@ public class Profile extends AppCompatActivity {
             editor.putString("currentAccount", userJson);
             editor.apply();
             showMessage(Profile.this,"Avatar change Successfully");
+//            MediaManager.get().upload(uri).callback(new UploadCallback() {
+//                @Override
+//                public void onStart(String requestId) {
+//                    Log.d(TAG, "onStart: "+"started");
+//                }
+//
+//                @Override
+//                public void onProgress(String requestId, long bytes, long totalBytes) {
+//                    Log.d(TAG, "onStart: "+"uploading");
+//                }
+//
+//                @Override
+//                public void onSuccess(String requestId, Map resultData) {
+//                    profile_image.setImageURI(uri);
+//                    currentAccount.setImage(String.valueOf(Uri.parse(resultData.get("url").toString())));
+//                    DatabaseReference myRef = firebaseDatabase.getReference(TableName.ACCOUNT_TABLE);
+//                    myRef.child(currentAccount.getId()).setValue(currentAccount);
+//                    SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    Gson gson = new Gson();
+//                    String userJson = gson.toJson(currentAccount);
+//                    editor.putString("currentAccount", userJson);
+//                    editor.apply();
+//                    showMessage(Profile.this,"Avatar change Successfully");
+//                }
+//
+//                @Override
+//                public void onError(String requestId, ErrorInfo error) {
+//                    Log.d(TAG, "onStart: "+error);
+//                }
+//
+//                @Override
+//                public void onReschedule(String requestId, ErrorInfo error) {
+//                    Log.d(TAG, "onStart: "+error);
+//                }
+//            }).dispatch();
+
+
         } else{
             showMessage(Profile.this,"Avatar change Failed");
         }
@@ -226,7 +315,19 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         bindingView();
+//        initConfig();
         getDataSharedPreferences();
         bindingAction();
+
     }
+
+//    private void initConfig() {
+//        //upload cloud image
+//        Map config = new HashMap();
+//        config.put("cloud_name", "dzak7lfgs");
+//        config.put("api_key","675618315582934");
+//        config.put("api_secret","h6oNEO66omG3LJ_WRqL9-f3LGWk");
+////        config.put("secure", true);
+//        MediaManager.init(this, config);
+//    }
 }
