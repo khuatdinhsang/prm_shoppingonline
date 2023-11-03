@@ -64,6 +64,7 @@ public class Product {
         this.size = size;
     }
 
+
     public String getImage() {
         return image;
     }
