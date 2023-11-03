@@ -1,5 +1,6 @@
 package com.example.shopping_online_prm392.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +49,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         @Override
         public void onClick(View v) {
             mIClickListener.OnClickAddMoreProduct(c);
+
         }
     });
-    holder.addProduct.setOnClickListener(new View.OnClickListener() {
+    holder.removeProduct.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             mIClickListener.OnClickRemoveProduct(c);

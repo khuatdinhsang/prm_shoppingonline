@@ -89,21 +89,35 @@ public class CartActivity extends AppCompatActivity {
     public void SaveAllToCart(){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference(TableName.CART_TABLE);
-        Log.d("sizeCart", "SaveAllToCart: " + cartProducts.size());
-        for(int i =0; i< 1;i++){
-            String pathObject = String.valueOf(cartProducts.get(i).getId());
-            myRef.child(pathObject).setValue(cartProducts.get(i), new DatabaseReference.CompletionListener() {
-                @Override
-                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                    Toast.makeText(CartActivity.this,"Add Success !",Toast.LENGTH_SHORT).show();
-                }
-            });
-            cartAdapter.notifyDataSetChanged();
-        }
+       myRef.addChildEventListener(new ChildEventListener() {
+           @Override
+           public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+           }
+
+           @Override
+           public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+           }
+
+           @Override
+           public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+           }
+
+           @Override
+           public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError error) {
+
+           }
+       });
     }
 
     public void UpdateAMoreProduct(Cart c){
-        Log.d("cart", "UpdateAMoreProduct: " + c.getId());
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference(TableName.CART_TABLE);
         String pathObject = String.valueOf(c.getId());
