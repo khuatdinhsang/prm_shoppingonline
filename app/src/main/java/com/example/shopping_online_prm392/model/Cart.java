@@ -1,21 +1,24 @@
 package com.example.shopping_online_prm392.model;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class Cart {
     private String id;
     private Product product;
     private int quantity;
     private int price;
-    private Account account;
-
+    private  String accountEmail;
     public Cart() {
     }
 
-    public Cart(String id, Product product, int quantity, int price, Account account) {
-        this.id = id;
+    public Cart(Product product, int quantity, int price, String account) {
+        this.id = UUID.randomUUID().toString();
         this.product = product;
         this.quantity = quantity;
         this.price = price;
-        this.account = account;
+        this.accountEmail = account;
     }
 
     public String getId() {
@@ -51,22 +54,28 @@ public class Cart {
         this.price = price;
     }
 
-    public Account getAccount() {
-        return account;
+    public String getAccount() {
+        return accountEmail;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccount(String account) {
+        this.accountEmail = account;
     }
 
     @Override
     public String toString() {
         return "Cart{" +
-                "id='" + id + '\'' +
+
                 ", product=" + product +
                 ", quantity=" + quantity +
                 ", price=" + price +
-                ", account=" + account +
+
                 '}';
+    }
+    public Map<String,Object> toMap(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("quantity",getQuantity());
+        map.put("price",getPrice());
+        return map;
     }
 }
