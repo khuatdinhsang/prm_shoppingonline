@@ -20,9 +20,17 @@ import java.util.List;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
     private List<Cart> cartProducts;
-    public CartAdapter(List<Cart> products){
-        this.cartProducts = products;
+    private IClickListener mIClickListener;
+    public interface IClickListener {
+        void OnClickAddMoreProduct(Cart cart);
+        void OnClickRemoveProduct(Cart cart);
     }
+
+    public CartAdapter(List<Cart> cartProducts, IClickListener mIClickListener) {
+        this.cartProducts = cartProducts;
+        this.mIClickListener = mIClickListener;
+    }
+
     @NonNull
     @Override
     public CartAdapter.CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,8 +42,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.CartViewHolder holder, int position) {
     // Bind data to card
-
-
+    Cart c = cartProducts.get(position);
+    holder.productName.setText(c.getProduct().getName());
+    holder.addProduct.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mIClickListener.OnClickAddMoreProduct(c);
+        }
+    });
+    holder.addProduct.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mIClickListener.OnClickRemoveProduct(c);
+        }
+    });
     }
 
     @Override
@@ -62,7 +82,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             productName = itemView.findViewById(R.id.product_name);
         }
         public void SetData(Cart cartModel){
-            productImage.setImageResource(cartModel.getProduct().getImage());
+
             productName.setText(cartModel.getProduct().getName());
             quantityProduct.setText(cartModel.getQuantity());
         }

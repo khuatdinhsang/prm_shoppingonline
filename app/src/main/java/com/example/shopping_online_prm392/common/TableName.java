@@ -5,5 +5,6 @@ public class TableName {
     public static final String CATEGORY_TABLE = "categories";
 
     public  static final String PRODUCT_TABLE = "products";
+    public  static final String CART_TABLE = "carts";
 
 }

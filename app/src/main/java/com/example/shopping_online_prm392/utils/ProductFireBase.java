@@ -1,6 +1,7 @@
 package com.example.shopping_online_prm392.utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,7 @@ public class ProductFireBase {
                 Toast.makeText(context, "Have error with firebase", Toast.LENGTH_SHORT).show();
             }
         });
-                return products;
+
+        return products;
     }
 }
