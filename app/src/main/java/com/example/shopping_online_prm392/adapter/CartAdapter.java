@@ -44,7 +44,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public void onBindViewHolder(@NonNull CartAdapter.CartViewHolder holder, int position) {
     // Bind data to card
     Cart c = cartProducts.get(position);
-    holder.productName.setText(c.getProduct().getName());
+    /*holder.productName.setText(c.getProduct().getName());*/
     holder.addProduct.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -83,11 +83,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             quantityProduct = itemView.findViewById(R.id.quantity_product);
             productName = itemView.findViewById(R.id.product_name);
         }
-        public void SetData(Cart cartModel){
 
-            productName.setText(cartModel.getProduct().getName());
-            quantityProduct.setText(cartModel.getQuantity());
-        }
 
     }
 }
