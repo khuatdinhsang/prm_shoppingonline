@@ -92,7 +92,6 @@ public class Product extends AppCompatActivity {
                 return true; // Trả về true để chỉ định rằng sự kiện đã được xử lý
             }
         });
-
         handleRecycleTshirt();
         handleRecycleJeans();
         handleRecycleShorts();
