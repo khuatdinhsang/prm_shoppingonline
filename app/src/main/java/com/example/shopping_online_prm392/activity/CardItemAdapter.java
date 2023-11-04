@@ -1,5 +1,7 @@
 package com.example.shopping_online_prm392.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +20,11 @@ import java.util.List;
 
 public  class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.CardItemViewHolder> {
     private List<CardItem> cardItemList;
+    private Context context;
 
-    public CardItemAdapter(List<CardItem> cardItemList) {
+    public CardItemAdapter(List<CardItem> cardItemList, Context context) {
         this.cardItemList = cardItemList;
+        this.context = context;
     }
 
     @NonNull
@@ -43,8 +47,14 @@ public  class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.CardI
             .fit()
             .centerCrop()
             .into(holder.imageImageView);
-
-
+        holder.imageImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailProduct.class);
+                intent.putExtra("productID",cardItem.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

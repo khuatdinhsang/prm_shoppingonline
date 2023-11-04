@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.shopping_online_prm392.activity.CardItemAdapter;
 import com.example.shopping_online_prm392.activity.Cart;
 import com.example.shopping_online_prm392.activity.CartActivity;
+import com.example.shopping_online_prm392.activity.DetailProduct;
 import com.example.shopping_online_prm392.activity.Product;
 import com.example.shopping_online_prm392.activity.Profile;
 import com.example.shopping_online_prm392.activity.Setting;
@@ -98,9 +99,8 @@ public class MainActivity extends AppCompatActivity {
             cardItemList.add(new CardItem(listProduct.get(i).getId(),listProduct.get(i).getImage(),listProduct.get(i).getName(), Integer.toString(listProduct.get(i).getPrice())));
         }
 
-        cartItemAdapter = new CardItemAdapter(cardItemList);
+        cartItemAdapter = new CardItemAdapter(cardItemList,this);
         recyclerView.setAdapter(cartItemAdapter);
-
     }
 
     private void viewAllHomeActivity(View view) {

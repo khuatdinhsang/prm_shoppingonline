@@ -40,7 +40,6 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cart_product);
         InitUI();
-        GetAllProduct();
     }
     private void InitUI(){
         getReferencesData();
@@ -66,26 +65,7 @@ public class CartActivity extends AppCompatActivity {
 
 
     }
-    public  void GetAllProduct(){
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = firebaseDatabase.getReference(TableName.PRODUCT_TABLE);
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Product p = dataSnapshot.getValue(Product.class);
-                    Cart c = new Cart(p,1,p.getPrice(),accountEmail);
-                    cartProducts.add(c);
-                }
 
-                cartAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
     public void SaveAllToCart(){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference(TableName.CART_TABLE);
@@ -121,8 +101,8 @@ public class CartActivity extends AppCompatActivity {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference(TableName.CART_TABLE);
         String pathObject = String.valueOf(c.getId());
-        c.setQuantity(c.getQuantity() + 1);
-        c.setPrice(c.getQuantity() * c.getProduct().getPrice());
+
+
         myRef.child(pathObject).updateChildren(c.toMap(), new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {

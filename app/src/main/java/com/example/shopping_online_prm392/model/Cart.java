@@ -1,24 +1,23 @@
 package com.example.shopping_online_prm392.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class Cart {
     private String id;
-    private Product product;
-    private int quantity;
     private int price;
-    private  String accountEmail;
+    private int quantity;
+    private  Product product;
     public Cart() {
     }
 
-    public Cart(Product product, int quantity, int price, String account) {
-        this.id = UUID.randomUUID().toString();
-        this.product = product;
-        this.quantity = quantity;
+    public Cart(String id, int price, int quantity, Product product) {
+        this.id = id;
         this.price = price;
-        this.accountEmail = account;
+        this.quantity = quantity;
+        this.product = product;
     }
 
     public String getId() {
@@ -29,14 +28,13 @@ public class Cart {
         this.id = id;
     }
 
-    public Product getProduct() {
-        return product;
+    public int getPrice() {
+        return price;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setPrice(int price) {
+        this.price = price;
     }
-
 
     public int getQuantity() {
         return quantity;
@@ -46,35 +44,16 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public int getPrice() {
-        return price;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public String getAccount() {
-        return accountEmail;
-    }
-
-    public void setAccount(String account) {
-        this.accountEmail = account;
-    }
-
-    @Override
-    public String toString() {
-        return "Cart{" +
-
-                ", product=" + product +
-                ", quantity=" + quantity +
-                ", price=" + price +
-
-                '}';
-    }
     public Map<String,Object> toMap(){
         Map<String,Object> map = new HashMap<>();
-        map.put("quantity",getQuantity());
         map.put("price",getPrice());
         return map;
     }
