@@ -15,10 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shopping_online_prm392.MainActivity;
 import com.example.shopping_online_prm392.R;
-import com.example.shopping_online_prm392.adapter.CartAdapter;
+import com.example.shopping_online_prm392.common.TableName;
 import com.example.shopping_online_prm392.model.CardItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,11 +92,13 @@ public class Product extends AppCompatActivity {
                 return true; // Trả về true để chỉ định rằng sự kiện đã được xử lý
             }
         });
+
         btnViewAllTshirts.setOnClickListener(this::viewAllTshirt);
         btnViewAllPants.setOnClickListener(this::viewAllJean);
         btnViewAllShorts.setOnClickListener(this::viewAllShort);
         btnViewAllSweaters.setOnClickListener(this::viewAllSweater);
         btnViewAllJackets.setOnClickListener(this::viewAllJacket);
+
 
         handleRecycleTshirt();
         handleRecycleJeans();
@@ -142,11 +148,7 @@ public class Product extends AppCompatActivity {
         recyclerViewShorts.setLayoutManager(layoutManagerShorts);
 
         cardItemListTSShorts = new ArrayList<>();
-        CardItem card = new CardItem("q","https://mikenco.vn/wp-content/uploads/2022/04/277908836_513264060301081_5597936888388835422_n.jpg","Tshirt","de");
-        cardItemListTSShorts.add(card);
-        cardItemListTSShorts.add(card);
-        cardItemListTSShorts.add(card);
-        cardItemListTSShorts.add(card);
+
 
         cardItemAdapterShorts= new CardItemAdapter(cardItemListTSShorts, this);
         recyclerViewShorts.setAdapter(cardItemAdapterShorts);
@@ -157,11 +159,6 @@ public class Product extends AppCompatActivity {
         recyclerViewSweater.setLayoutManager(layoutManagerSweater);
 
         cardItemListTSweater = new ArrayList<>();
-        CardItem card = new CardItem("q","https://mikenco.vn/wp-content/uploads/2022/04/277908836_513264060301081_5597936888388835422_n.jpg","Tshirt","de");
-        cardItemListTSweater.add(card);
-        cardItemListTSweater.add(card);
-        cardItemListTSweater.add(card);
-        cardItemListTSweater.add(card);
 
         cardItemAdapterSweater= new CardItemAdapter(cardItemListTSweater, this);
         recyclerViewSweater.setAdapter(cardItemAdapterSweater);
@@ -172,11 +169,6 @@ public class Product extends AppCompatActivity {
         recyclerViewJacket.setLayoutManager(layoutManagerJacket);
 
         cardItemListTJacket = new ArrayList<>();
-        CardItem card = new CardItem("q","https://mikenco.vn/wp-content/uploads/2022/04/277908836_513264060301081_5597936888388835422_n.jpg","Tshirt","de");
-        cardItemListTJacket.add(card);
-        cardItemListTJacket.add(card);
-        cardItemListTJacket.add(card);
-        cardItemListTJacket.add(card);
 
         cardItemAdapterJacket= new CardItemAdapter(cardItemListTJacket, this);
         recyclerViewJacket.setAdapter(cardItemAdapterJacket);
@@ -187,11 +179,7 @@ public class Product extends AppCompatActivity {
         recyclerViewJean.setLayoutManager(layoutManagerJeans);
 
         cardItemListTSJean = new ArrayList<>();
-        CardItem card = new CardItem("q","https://mikenco.vn/wp-content/uploads/2022/04/277908836_513264060301081_5597936888388835422_n.jpg","Tshirt","de");
-        cardItemListTSJean.add(card);
-        cardItemListTSJean.add(card);
-        cardItemListTSJean.add(card);
-        cardItemListTSJean.add(card);
+
 
         cardItemAdapterJean= new CardItemAdapter(cardItemListTSJean, this);
         recyclerViewJean.setAdapter(cardItemAdapterJean);
@@ -203,17 +191,130 @@ public class Product extends AppCompatActivity {
         recyclerViewTShirts.setLayoutManager(layoutManagerTshirt);
 
         cardItemListTShirts = new ArrayList<>();
-        CardItem card = new CardItem("q","https://mikenco.vn/wp-content/uploads/2022/04/277908836_513264060301081_5597936888388835422_n.jpg","Tshirt","de");
-        cardItemListTShirts.add(card);
-        cardItemListTShirts.add(card);
-        cardItemListTShirts.add(card);
-        cardItemListTShirts.add(card);
 
         cardItemAdapterTShirts = new CardItemAdapter(cardItemListTShirts, this);
         recyclerViewTShirts.setAdapter(cardItemAdapterTShirts);
 
     }
+    private void GetAllProductTypeTShirts(){
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference(TableName.PRODUCT_TABLE);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snap : snapshot.getChildren()){
+                    com.example.shopping_online_prm392.model.Product p = snap.getValue(com.example.shopping_online_prm392.model.Product.class);
+                    if(p.getCategory().equals("250606aa-7960-11ee-b962-0242ac120002")){
+                        CardItem c = new CardItem(p.getId(),p.getImage(),p.getName(),Integer.toString(p.getPrice()));
+                        cardItemListTShirts.add(c);
+                    }
+                }
+                cardItemAdapterTShirts.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+    private void GetAllProductTypeTShorts(){
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference(TableName.PRODUCT_TABLE);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snap : snapshot.getChildren()){
+                    com.example.shopping_online_prm392.model.Product p = snap.getValue(com.example.shopping_online_prm392.model.Product.class);
+                    if(p.getCategory().equals("25060ccc-7960-11ee-b962-0242ac120002")){
+                        CardItem c = new CardItem(p.getId(),p.getImage(),p.getName(),Integer.toString(p.getPrice()));
+                        cardItemListTSShorts.add(c);
+                    }
+                }
+                cardItemAdapterShorts.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void GetAllProductTypeJeans(){
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference(TableName.PRODUCT_TABLE);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snap : snapshot.getChildren()){
+                    com.example.shopping_online_prm392.model.Product p = snap.getValue(com.example.shopping_online_prm392.model.Product.class);
+                    if(p.getCategory().equals("25060b5a-7960-11ee-b962-0242ac120002")){
+                        CardItem c = new CardItem(p.getId(),p.getImage(),p.getName(),Integer.toString(p.getPrice()));
+                        cardItemListTSJean.add(c);
+
+                    }
+                }
+                cardItemAdapterJean.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+    private void GetAllProductTypeJacket(){
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference(TableName.PRODUCT_TABLE);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snap : snapshot.getChildren()){
+                    com.example.shopping_online_prm392.model.Product p = snap.getValue(com.example.shopping_online_prm392.model.Product.class);
+                    if(p.getCategory().equals("25060f06-7960-11ee-b962-0242ac120002")){
+                        CardItem c = new CardItem(p.getId(),p.getImage(),p.getName(),Integer.toString(p.getPrice()));
+                        cardItemListTJacket.add(c);
+
+                    }
+                }
+                cardItemAdapterJacket.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+    private void GetAllProductTypeSweater(){
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference(TableName.PRODUCT_TABLE);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snap : snapshot.getChildren()){
+                    com.example.shopping_online_prm392.model.Product p = snap.getValue(com.example.shopping_online_prm392.model.Product.class);
+                    if(p.getCategory().equals("25060dda-7960-11ee-b962-0242ac120002")){
+                        CardItem c = new CardItem(p.getId(),p.getImage(),p.getName(),Integer.toString(p.getPrice()));
+                        cardItemListTSweater.add(c);
+
+                    }
+                }
+                cardItemAdapterSweater.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
     private void homeActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -242,5 +343,10 @@ public class Product extends AppCompatActivity {
         setContentView(R.layout.activity_all_products);
         bindingView();
         bindingAction();
+        GetAllProductTypeTShirts();
+        GetAllProductTypeJeans();
+        GetAllProductTypeJacket();
+        GetAllProductTypeSweater();
+        GetAllProductTypeTShorts();
     }
 }
