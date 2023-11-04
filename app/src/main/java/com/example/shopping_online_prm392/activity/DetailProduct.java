@@ -128,7 +128,12 @@ public class DetailProduct extends AppCompatActivity {
         DatabaseReference myRef = firebaseDatabase.getReference(TableName.CART_TABLE);
         for (Cart c : carts){
             String pathObject = String.valueOf(c.getId() + "size" + c.getProduct().getSize());
-            myRef.child(accountEmail).child(pathObject).setValue(c);
+            myRef.child(accountEmail).child(pathObject).setValue(c, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                    Toast.makeText(DetailProduct.this, "Add to cart success !", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
     private void GetAllCartItem(){

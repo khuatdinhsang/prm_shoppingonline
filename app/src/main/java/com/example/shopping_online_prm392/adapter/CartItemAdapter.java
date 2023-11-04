@@ -1,4 +1,4 @@
-package com.example.shopping_online_prm392.activity;
+package com.example.shopping_online_prm392.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.shopping_online_prm392.R;
+import com.example.shopping_online_prm392.model.Cart;
 import com.example.shopping_online_prm392.model.Product;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartItemViewHolder> {
-    private List<Product> cartItemList;
+    private List<Cart> cartItemList;
 
-    public CartItemAdapter(List<Product> cartItemList) {
+    public CartItemAdapter(List<Cart> cartItemList) {
         this.cartItemList = cartItemList;
     }
 
@@ -31,7 +33,18 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
 
     @Override
     public void onBindViewHolder(@NonNull CartItemViewHolder holder, int position) {
-        Product cartItem = cartItemList.get(position);
+        Cart cartItem = cartItemList.get(position);
+        Product p = cartItem.getProduct();
+        holder.cartItemName.setText(p.getName());
+        holder.cartItemPrice.setText(Integer.toString(p.getPrice()));
+        holder.cartItemSize.setText(p.getSize());
+        holder.cartItemQuantity.setText(Integer.toString(cartItem.getQuantity()));
+        Picasso.get().load(p.getImage())
+                .placeholder(R.drawable.default_image)
+                .error(R.drawable.error_image)
+                .fit()
+                .centerCrop()
+                .into(holder.cartItemImage);
     }
 
     @Override
