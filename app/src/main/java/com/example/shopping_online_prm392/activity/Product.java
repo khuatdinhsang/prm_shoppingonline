@@ -92,11 +92,54 @@ public class Product extends AppCompatActivity {
                 return true; // Trả về true để chỉ định rằng sự kiện đã được xử lý
             }
         });
+
+        btnViewAllTshirts.setOnClickListener(this::viewAllTshirt);
+        btnViewAllPants.setOnClickListener(this::viewAllJean);
+        btnViewAllShorts.setOnClickListener(this::viewAllShort);
+        btnViewAllSweaters.setOnClickListener(this::viewAllSweater);
+        btnViewAllJackets.setOnClickListener(this::viewAllJacket);
+
+
         handleRecycleTshirt();
         handleRecycleJeans();
         handleRecycleShorts();
         handleRecycleSweater();
         handleRecycleJacket();
+    }
+
+    private void viewAllJacket(View view) {
+        String id = "25060f06-7960-11ee-b962-0242ac120002";
+        Intent intent = new Intent(this, ProductByCategory.class);
+        intent.putExtra("categoryID", id);
+        startActivity(intent);
+    }
+
+    private void viewAllSweater(View view) {
+        String id = "25060dda-7960-11ee-b962-0242ac120002";
+        Intent intent = new Intent(this, ProductByCategory.class);
+        intent.putExtra("categoryID", id);
+        startActivity(intent);
+    }
+
+    private void viewAllShort(View view) {
+        String id = "25060ccc-7960-11ee-b962-0242ac120002";
+        Intent intent = new Intent(this, ProductByCategory.class);
+        intent.putExtra("categoryID", id);
+        startActivity(intent);
+    }
+
+    private void viewAllJean(View view) {
+        String id = "25060b5a-7960-11ee-b962-0242ac120002";
+        Intent intent = new Intent(this, ProductByCategory.class);
+        intent.putExtra("categoryID", id);
+        startActivity(intent);
+    }
+
+    private void viewAllTshirt(View view) {
+        String idTshirt = "250606aa-7960-11ee-b962-0242ac120002";
+        Intent intent = new Intent(this, ProductByCategory.class);
+        intent.putExtra("categoryID", idTshirt);
+        startActivity(intent);
     }
 
     private void handleRecycleShorts(){

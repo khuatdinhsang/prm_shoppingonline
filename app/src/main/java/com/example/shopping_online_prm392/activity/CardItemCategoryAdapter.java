@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,6 +55,14 @@ public  class CardItemCategoryAdapter extends RecyclerView.Adapter<CardItemCateg
                 context.startActivity(intent);
             }
         });
+        holder.addToCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailProduct.class);
+                intent.putExtra("productID",cardItem.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -66,12 +75,14 @@ public  class CardItemCategoryAdapter extends RecyclerView.Adapter<CardItemCateg
         TextView contentTextView;
 
         ImageView imageImageView;
+        Button addToCartBtn;
 
         public CardItemViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.name_product);
             contentTextView = itemView.findViewById(R.id.price_product);
             imageImageView = itemView.findViewById(R.id.image_product);
+            addToCartBtn = itemView.findViewById(R.id.btn_add_cart_product_category);
         }
     }
 }
