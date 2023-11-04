@@ -2,10 +2,10 @@ package com.example.shopping_online_prm392.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,11 +18,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public  class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.CardItemViewHolder> {
+public  class CardItemCategoryAdapter extends RecyclerView.Adapter<CardItemCategoryAdapter.CardItemViewHolder> {
     private List<CardItem> cardItemList;
     private Context context;
 
-    public CardItemAdapter(List<CardItem> cardItemList, Context context) {
+    public CardItemCategoryAdapter(List<CardItem> cardItemList, Context context) {
         this.cardItemList = cardItemList;
         this.context = context;
     }
@@ -30,7 +30,7 @@ public  class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.CardI
     @NonNull
     @Override
     public CardItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item_category, parent, false);
         return new CardItemViewHolder(view);
     }
 
@@ -55,6 +55,14 @@ public  class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.CardI
                 context.startActivity(intent);
             }
         });
+        holder.addToCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailProduct.class);
+                intent.putExtra("productID",cardItem.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -67,12 +75,14 @@ public  class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.CardI
         TextView contentTextView;
 
         ImageView imageImageView;
+        Button addToCartBtn;
 
         public CardItemViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.name_product);
             contentTextView = itemView.findViewById(R.id.price_product);
             imageImageView = itemView.findViewById(R.id.image_product);
+            addToCartBtn = itemView.findViewById(R.id.btn_add_cart_product_category);
         }
     }
 }

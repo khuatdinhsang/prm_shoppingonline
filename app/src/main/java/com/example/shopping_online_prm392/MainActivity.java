@@ -4,28 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.shopping_online_prm392.activity.CardItemAdapter;
-import com.example.shopping_online_prm392.activity.Cart;
-import com.example.shopping_online_prm392.activity.CartActivity;
+import com.example.shopping_online_prm392.activity.CartDetail;
 import com.example.shopping_online_prm392.activity.Product;
 import com.example.shopping_online_prm392.activity.Profile;
 import com.example.shopping_online_prm392.activity.Setting;
-import com.example.shopping_online_prm392.adapter.SlideAdapter;
 import com.example.shopping_online_prm392.common.TableName;
 import com.example.shopping_online_prm392.model.CardItem;
-import com.example.shopping_online_prm392.model.Slide;
 import com.example.shopping_online_prm392.utils.Utils;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -95,13 +89,11 @@ public class MainActivity extends AppCompatActivity {
     private void handleRecycleView(){
 
         for(int i=0; i<listProduct.size();i++){
-            cardItemList.add(new CardItem("","Quan dai","200$"));
-            cardItemList.add(new CardItem("",listProduct.get(i).getName(), Integer.toString(listProduct.get(i).getPrice())));
+            cardItemList.add(new CardItem(listProduct.get(i).getId(),listProduct.get(i).getImage(),listProduct.get(i).getName(), Integer.toString(listProduct.get(i).getPrice())));
         }
 
-        cartItemAdapter = new CardItemAdapter(cardItemList);
+        cartItemAdapter = new CardItemAdapter(cardItemList,this);
         recyclerView.setAdapter(cartItemAdapter);
-
     }
 
     private void viewAllHomeActivity(View view) {
@@ -125,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void cartActivity() {
-        Intent intent = new Intent(this, CartActivity.class);
+        Intent intent = new Intent(this, CartDetail.class);
         startActivity(intent);
         finish();
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
