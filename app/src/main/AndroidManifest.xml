@@ -54,7 +54,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.Product"
-            android:exported="false" /> <!-- activity.Login  .activity.ManagerAccount .activity.Register -->
+            android:exported="false"/>
         <activity
             android:name=".activity.CartActivity"
             android:exported="false" />
