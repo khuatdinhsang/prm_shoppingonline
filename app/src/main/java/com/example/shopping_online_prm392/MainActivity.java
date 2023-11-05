@@ -97,11 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
         cartItemAdapter = new CardItemAdapter(cardItemList,this);
         recyclerView.setAdapter(cartItemAdapter);
-
-        RecyclerView.ItemAnimator itemAnimator = recyclerView.getItemAnimator();
-        if (itemAnimator instanceof DefaultItemAnimator) {
-            ((DefaultItemAnimator) itemAnimator).setSupportsChangeAnimations(false); // Tắt animation khi dữ liệu thay đổi
-        }
     }
 
     private void viewAllHomeActivity(View view) {
