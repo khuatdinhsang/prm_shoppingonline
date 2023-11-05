@@ -58,7 +58,7 @@ public class CartDetail extends AppCompatActivity {
     }
 
     private void checkoutActivity(View view) {
-        Intent intent = new Intent(this, Payment.class);
+        Intent intent = new Intent(this, Checkout.class);
         startActivity(intent);
     }
 
