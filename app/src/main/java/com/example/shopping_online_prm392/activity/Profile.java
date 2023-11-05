@@ -104,6 +104,7 @@ public class Profile extends AppCompatActivity {
                 return true; // Trả về true để chỉ định rằng sự kiện đã được xử lý
             }
         });
+        bottomNavigationView.getMenu().findItem(R.id.profile_Bottomnavigation).setChecked(true);
         btnLogout.setOnClickListener(this::logout);
         profile_image.setOnClickListener(this::uploadProfileImg);
         cvPassword.setOnClickListener(this::changePassword);

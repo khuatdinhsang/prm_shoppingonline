@@ -99,7 +99,7 @@ public class Product extends AppCompatActivity {
         btnViewAllSweaters.setOnClickListener(this::viewAllSweater);
         btnViewAllJackets.setOnClickListener(this::viewAllJacket);
 
-
+        bottomNavigationView.getMenu().findItem(R.id.home_Bottomnavigation).setChecked(true);
         handleRecycleTshirt();
         handleRecycleJeans();
         handleRecycleShorts();
