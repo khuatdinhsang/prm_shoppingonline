@@ -26,16 +26,16 @@
         android:theme="@style/Theme.Shopping_online_prm392"
         tools:targetApi="31">
         <activity
+            android:name=".activity.Checkout"
+            android:exported="true" />
+        <activity
             android:name=".activity.ProductByCategory"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".activity.CartDetail"
             android:exported="false" />
         <activity
             android:name=".activity.DetailProduct"
-            android:exported="false" />
-        <activity
-            android:name=".activity.Cart"
             android:exported="false" />
         <activity
             android:name=".activity.Setting"
@@ -63,7 +63,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
