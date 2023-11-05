@@ -61,7 +61,6 @@ public class DetailProduct extends AppCompatActivity {
 
         addToCart.setEnabled(false);
         carts = new ArrayList<>();
-
     }
 
     private void bindingAction(){
@@ -107,6 +106,12 @@ public class DetailProduct extends AppCompatActivity {
                 AddToCart();
             }
         });
+        btnBack.setOnClickListener(this::actionBack);
+    }
+
+    private void actionBack(View view) {
+        Intent intent = new Intent(this, com.example.shopping_online_prm392.activity.Product.class);
+        startActivity(intent);
     }
 
     private void AddToCart(){

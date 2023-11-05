@@ -79,7 +79,8 @@ public class ProductByCategory extends AppCompatActivity {
         });
     }
     private void handleBack(View view) {
-
+        Intent intent = new Intent(this, com.example.shopping_online_prm392.activity.Product.class);
+        startActivity(intent);
     }
 
     @Override
