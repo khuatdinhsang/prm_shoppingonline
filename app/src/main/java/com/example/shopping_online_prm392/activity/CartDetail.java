@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shopping_online_prm392.R;
@@ -18,7 +19,6 @@ import com.example.shopping_online_prm392.adapter.CartItemAdapter;
 import com.example.shopping_online_prm392.common.TableName;
 import com.example.shopping_online_prm392.model.Account;
 import com.example.shopping_online_prm392.model.Cart;
-import com.example.shopping_online_prm392.model.Product;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +31,7 @@ import java.util.List;
 
 public class CartDetail extends AppCompatActivity {
     private RecyclerView recyclerView;
+    private ImageView btnBack;
     private CartItemAdapter cartItemAdapter;
     private List<Cart> cartItemList;
     private Button btnToCheckout;
@@ -41,12 +42,19 @@ public class CartDetail extends AppCompatActivity {
     private void bindingView(){
         btnToCheckout = findViewById(R.id.detail_to_checkout);
         totalPrice = findViewById(R.id.cart_subtotal_price);
+        btnBack = findViewById(R.id.cart_backIcon);
     }
 
     private void bindingAction(){
         handleRecycleView();
         btnToCheckout.setOnClickListener(this::checkoutActivity);
+        btnBack.setOnClickListener(this::backToProduct);
 
+    }
+
+    private void backToProduct(View view) {
+        super.onBackPressed();
+        finish();
     }
 
     private void checkoutActivity(View view) {
