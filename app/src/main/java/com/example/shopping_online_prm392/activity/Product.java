@@ -327,9 +327,8 @@ public class Product extends AppCompatActivity {
     }
 
     private void cartActivity() {
-        Intent intent = new Intent(this, Cart.class);
+        Intent intent = new Intent(this, CartDetail.class);
         startActivity(intent);
-        finish();
     }
 
     private void profileActivity() {

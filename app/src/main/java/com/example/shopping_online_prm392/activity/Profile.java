@@ -292,9 +292,8 @@ public class Profile extends AppCompatActivity {
     }
 
     private void cartActivity() {
-        Intent intent = new Intent(this, Cart.class);
+        Intent intent = new Intent(this, CartDetail.class);
         startActivity(intent);
-        finish();
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
