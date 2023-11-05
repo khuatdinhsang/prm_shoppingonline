@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 return true; // Trả về true để chỉ định rằng sự kiện đã được xử lý
             }
         });
+        bottomNavigationView.getMenu().findItem(R.id.home_Bottomnavigation).setChecked(true);
+
         viewAllNewProduct.setOnClickListener(this::viewAllHomeActivity);
     }
 
