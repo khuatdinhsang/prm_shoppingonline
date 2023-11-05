@@ -265,6 +265,8 @@ public class Profile extends AppCompatActivity {
             currentAccount = gson.fromJson(accountJson, Account.class);
             Picasso.get()
                     .load(currentAccount.getImage())
+                    .placeholder(R.drawable.default_image)
+                    .error(R.drawable.error_image)
                     .into(profile_image);
             String email = currentAccount.getEmail();
             String role = currentAccount.getRole();
