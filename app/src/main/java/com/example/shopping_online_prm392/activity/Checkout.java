@@ -37,7 +37,7 @@ public class Checkout extends AppCompatActivity {
     }
 
     private void placeOrder(View view) {
-        
+
     }
 
     private void backToCart(View view) {

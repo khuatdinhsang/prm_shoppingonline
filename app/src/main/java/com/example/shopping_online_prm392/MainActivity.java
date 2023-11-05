@@ -2,6 +2,7 @@ package com.example.shopping_online_prm392;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -96,6 +97,11 @@ public class MainActivity extends AppCompatActivity {
 
         cartItemAdapter = new CardItemAdapter(cardItemList,this);
         recyclerView.setAdapter(cartItemAdapter);
+
+        RecyclerView.ItemAnimator itemAnimator = recyclerView.getItemAnimator();
+        if (itemAnimator instanceof DefaultItemAnimator) {
+            ((DefaultItemAnimator) itemAnimator).setSupportsChangeAnimations(false); // Tắt animation khi dữ liệu thay đổi
+        }
     }
 
     private void viewAllHomeActivity(View view) {
