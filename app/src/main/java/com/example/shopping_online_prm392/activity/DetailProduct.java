@@ -18,6 +18,7 @@ import com.example.shopping_online_prm392.R;
 import com.example.shopping_online_prm392.common.TableName;
 import com.example.shopping_online_prm392.model.Account;
 import com.example.shopping_online_prm392.model.Cart;
+import com.example.shopping_online_prm392.model.Category;
 import com.example.shopping_online_prm392.model.Product;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -44,6 +45,7 @@ public class DetailProduct extends AppCompatActivity {
     private  TextView productDes;
     private ImageView productImage;
     private String accountEmail;
+    private TextView categoryDetail;
     private List<Cart> carts;
 
     private com.example.shopping_online_prm392.model.Product product;
@@ -58,7 +60,7 @@ public class DetailProduct extends AppCompatActivity {
         productPrice = findViewById(R.id.detail_product_price);
         productImage = findViewById(R.id.detail_image);
         productDes = findViewById(R.id.detail_descriptionContent);
-
+        categoryDetail = findViewById(R.id.detail_categoryName);
         addToCart.setEnabled(false);
         carts = new ArrayList<>();
     }
@@ -174,6 +176,7 @@ public class DetailProduct extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 product = snapshot.getValue(Product.class);
                 SetDataForProductDetail(product);
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -193,6 +196,23 @@ public class DetailProduct extends AppCompatActivity {
                 .centerCrop()
                 .into(productImage);
         productDes.setText(p.getDescription());
+        switch (product.getCategory()){
+            case "250606aa-7960-11ee-b962-0242ac120002" :
+                categoryDetail.setText("T-Shirt");
+                break;
+            case "25060b5a-7960-11ee-b962-0242ac120002" :
+                categoryDetail.setText("Jeans");
+                break;
+            case "25060ccc-7960-11ee-b962-0242ac120002" :
+                categoryDetail.setText("Shorts");
+                break;
+            case "25060dda-7960-11ee-b962-0242ac120002" :
+                categoryDetail.setText("Sweater");
+                break;
+            case "25060f06-7960-11ee-b962-0242ac120002" :
+                categoryDetail.setText("Jacket");
+                break;
+        }
     }
 
     @Override
