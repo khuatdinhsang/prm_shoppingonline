@@ -53,7 +53,7 @@ public class ViewCartNoCheckOut extends AppCompatActivity {
         cartList.add(c);
         cartList.add(c);
 
-        cartItemAdapter = new CartItemAdapter(cartList);
+        
         recyclerView.setAdapter(cartItemAdapter);
     }
     @Override

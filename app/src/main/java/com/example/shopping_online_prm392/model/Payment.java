@@ -1,21 +1,34 @@
 package com.example.shopping_online_prm392.model;
 
 import java.sql.Date;
+import java.util.List;
+import java.util.UUID;
 
 public class Payment {
     private String id;
     private Account account;
     private AddressShipping addressShipping;
-    private Cart cart;
-    private Date date;
+    private List<Cart> carts;
+    private int totalAmount;
+    private String date;
     public Payment() {
     }
 
-    public Payment(String id, Account account, AddressShipping addressShipping, Cart cart) {
-        this.id = id;
+    public Payment(Account account, AddressShipping addressShipping, List<Cart> carts,String date,int totalAmount) {
+        this.id = UUID.randomUUID().toString();
         this.account = account;
         this.addressShipping = addressShipping;
-        this.cart = cart;
+        this.carts = carts;
+        this.date = date;
+        this.totalAmount = totalAmount;
+    }
+
+    public int getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(int totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public String getId() {
@@ -42,21 +55,29 @@ public class Payment {
         this.addressShipping = addressShipping;
     }
 
-    public Cart getCart() {
-        return cart;
+    public String getDate() {
+        return date;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    @Override
-    public String toString() {
-        return "Payment{" +
-                "id='" + id + '\'' +
-                ", account=" + account +
-                ", addressShipping=" + addressShipping +
-                ", cart=" + cart +
-                '}';
+    public List<Cart> getCarts() {
+        return carts;
     }
+
+    public void setCarts(List<Cart> carts) {
+        this.carts = carts;
+    }
+
+
+
+
+    public static Date CreateDate(){
+        long current = System.currentTimeMillis();
+        Date currentDate = new Date(current);
+        return currentDate;
+    }
+
 }
