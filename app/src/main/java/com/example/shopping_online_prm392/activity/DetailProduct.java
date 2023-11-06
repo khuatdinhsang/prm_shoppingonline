@@ -29,9 +29,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class DetailProduct extends AppCompatActivity {
@@ -112,8 +114,8 @@ public class DetailProduct extends AppCompatActivity {
     }
 
     private void actionBack(View view) {
-        Intent intent = new Intent(this, com.example.shopping_online_prm392.activity.Product.class);
-        startActivity(intent);
+       super.onBackPressed();
+       finish();
     }
 
     private void AddToCart(){
@@ -186,7 +188,10 @@ public class DetailProduct extends AppCompatActivity {
     private void SetDataForProductDetail(com.example.shopping_online_prm392.model.Product p){
         Log.d("productDetail", "SetDataForProductDetail: " + p.getName());
         productName.setText(p.getName());
-        productPrice.setText(Integer.toString(p.getPrice()));
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        int ammount = p.getPrice();
+        String formattedAmmount = currencyFormat.format(ammount);
+        productPrice.setText(formattedAmmount);
         String imageUrl = p.getImage();
         Picasso.get().load(imageUrl)
                 .placeholder(R.drawable.default_image)

@@ -15,7 +15,9 @@ import com.example.shopping_online_prm392.model.Cart;
 import com.example.shopping_online_prm392.model.Product;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartItemViewHolder> {
     private List<Cart> cartItemList;
@@ -36,7 +38,10 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
         Cart cartItem = cartItemList.get(position);
         Product p = cartItem.getProduct();
         holder.cartItemName.setText(p.getName());
-        holder.cartItemPrice.setText(Integer.toString(p.getPrice()));
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        int ammount = p.getPrice();
+        String formattedAmmount = currencyFormat.format(ammount);
+        holder.cartItemPrice.setText(formattedAmmount);
         holder.cartItemSize.setText(p.getSize());
         holder.cartItemQuantity.setText(Integer.toString(cartItem.getQuantity()));
         Picasso.get().load(p.getImage())

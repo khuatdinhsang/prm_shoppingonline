@@ -26,8 +26,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CartDetail extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -91,7 +93,10 @@ public class CartDetail extends AppCompatActivity {
                     cartItemList.add(cartItem);
                     cartItemAdapter.notifyDataSetChanged();
                     price += cartItem.getPrice();
-                    totalPrice.setText(Integer.toString(price));
+                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+                    int ammount = price;
+                    String formattedAmmount = currencyFormat.format(ammount);
+                    totalPrice.setText(formattedAmmount);
                 }
             }
 

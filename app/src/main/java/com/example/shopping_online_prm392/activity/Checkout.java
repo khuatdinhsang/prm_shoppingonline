@@ -89,7 +89,7 @@ public class Checkout extends AppCompatActivity {
         intent.setType("message/rfc822");
         startActivity(intent);
 
-        
+
 //        String senderEmail = "vuongnvhe163581@fpt.edu.vn";
 //        String receiverEmail = "vuongnguyenvan282@gmail.com";
 //
