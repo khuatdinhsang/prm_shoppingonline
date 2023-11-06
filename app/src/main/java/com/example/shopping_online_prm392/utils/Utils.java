@@ -81,6 +81,7 @@ public class Utils {
                     Category category = dataSnapshot.getValue(Category.class);
                     listCategory.add(category);
                 }
+
                 Log.i("81",listCategory.toString());
             }
             @Override
