@@ -1,5 +1,7 @@
 package com.example.shopping_online_prm392.model;
 
+import java.util.UUID;
+
 public class AddressShipping {
     private String id;
     private String name;
@@ -9,8 +11,8 @@ public class AddressShipping {
     public AddressShipping() {
     }
 
-    public AddressShipping(String id, String name, String phone, String address) {
-        this.id = id;
+    public AddressShipping( String name, String phone, String address) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.phone = phone;
         this.address = address;
