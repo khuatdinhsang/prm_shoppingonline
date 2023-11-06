@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.shopping_online_prm392.MainActivity;
 import com.example.shopping_online_prm392.R;
 import com.example.shopping_online_prm392.adapter.CartItemAdapter;
 import com.example.shopping_online_prm392.adapter.CheckOutProductItemAdapter;
@@ -46,6 +47,7 @@ import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -103,6 +105,10 @@ public class Checkout extends AppCompatActivity {
             });
             DatabaseReference myRef1 = firebaseDatabase.getReference(TableName.CART_TABLE);
             myRef1.child(account.getId()).removeValue();
+//            sendMail(nameUser,address);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
 
     }
@@ -120,37 +126,48 @@ public class Checkout extends AppCompatActivity {
         startActivity(intent);*/
 
 
-//        final String senderMail = "vuongnvhe163581@fpt.edu.vn";
-//        final String password = "igkw cnii jedi wkkz";
-//
-//        Properties prop = new Properties();
-//
-//        prop.put("mail.smtp.host", "smtp.gmail.com");
-//        prop.put("mail.smtp.port", "587");
-//        prop.put("mail.smtp.auth", "true");
-//        prop.put("mail.smtp.starttls.enable", "true");
-//
-//        Session session = Session.getInstance(prop,
-//                new javax.mail.Authenticator(){
-//                    protected PasswordAuthentication getPasswordAuthentication(){
-//                        return new PasswordAuthentication(senderMail, password);
-//                    }
-//                });
-//        try{
-//            Message message = new MimeMessage(session);
-//            message.setFrom(new InternetAddress(senderMail));
-//            message.setRecipients(
-//                    Message.RecipientType.TO,
-//                    InternetAddress.parse("dinhhoan0511@gmail.com")
-//            );
-//
-//            message.setSubject("Testing Gmail SSL");
-//            message.setText("Order Detail");
-//
-//            Transport.send(message);
-//        }catch (MessagingException e){
-//            e.printStackTrace();
-//        }
+        final String senderMail = "vuongnguyenvan282@gmail.com";
+        final String password = "blbd doei zxna svlt";
+
+        Properties prop = new Properties();
+
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "465");
+        prop.put("mail.smtp.ssl.enable", "true");
+        prop.put("mail.smtp.auth", "true");
+
+        Session session = Session.getInstance(prop,
+                new javax.mail.Authenticator(){
+                    protected PasswordAuthentication getPasswordAuthentication(){
+                        return new PasswordAuthentication(senderMail, password);
+                    }
+                });
+        try{
+            MimeMessage mimeMessage = new MimeMessage(session);
+            mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress("vuongnvhe163581@fpt.edu.vn"));
+
+            mimeMessage.setSubject("Subject");
+            mimeMessage.setText("hello");
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Transport.send(mimeMessage);
+                    }catch (MessagingException e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            Transport.send(mimeMessage);
+
+
+        }catch (AddressException e) {
+            e.printStackTrace();
+        }catch (MessagingException e){
+            e.printStackTrace();
+        }
 
 
 
