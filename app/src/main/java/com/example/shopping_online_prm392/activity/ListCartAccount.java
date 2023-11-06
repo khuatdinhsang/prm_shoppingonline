@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.shopping_online_prm392.R;
@@ -26,8 +27,16 @@ public class ListCartAccount extends AppCompatActivity {
     }
 
     private void handleAction(){
+
         handleRecyclerView();
+        btnBack.setOnClickListener(this::previosScreen);
     }
+
+    private void previosScreen(View view) {
+        super.onBackPressed();
+        finish();
+    }
+
 
     private void handleRecyclerView(){
         recyclerView = findViewById(R.id.recycler_view_list_cart);

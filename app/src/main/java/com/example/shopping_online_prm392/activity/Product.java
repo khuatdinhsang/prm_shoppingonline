@@ -33,7 +33,6 @@ public class Product extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView ;
     private MenuItem btnCart;
     private MenuItem btnHome;
-    private MenuItem btnSetting;
     private MenuItem btnProfile;
     private TextView btnViewAllTshirts;
     private TextView btnViewAllPants;
@@ -60,7 +59,6 @@ public class Product extends AppCompatActivity {
     private void bindingView(){
         bottomNavigationView = findViewById(R.id.home_bottomNavigation);
         btnCart = bottomNavigationView.getMenu().findItem(R.id.cart_Bottomnavigation);
-        btnSetting = bottomNavigationView.getMenu().findItem(R.id.setting_Bottomnavigation);
         btnProfile = bottomNavigationView.getMenu().findItem(R.id.profile_Bottomnavigation);
         btnHome = bottomNavigationView.getMenu().findItem(R.id.home_bottomNavigation);
         btnViewAllTshirts = findViewById(R.id.all_product_tshirts_viewAll);
@@ -85,9 +83,7 @@ public class Product extends AppCompatActivity {
                     case "Profile":
                         profileActivity();
                         break;
-                    case "Setting":
-                        settingActivity();
-                        break;
+
                 }
                 return true; // Trả về true để chỉ định rằng sự kiện đã được xử lý
             }

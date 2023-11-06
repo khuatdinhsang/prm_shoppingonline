@@ -61,18 +61,18 @@ public class Profile extends AppCompatActivity {
     private TextView profile_role;
     private Button btnLogout;
     private MenuItem btnHome;
-    private MenuItem btnSetting;
     private MenuItem btnProfile;
     private Dialog dialog;
     private Account currentAccount;
     private CardView cvPassword;
     private EditText edtOldPassword, edtNewPassword, edtReNewPassword;
     private TextView changePas_showErr;
+    private CardView cardViewOrder;
+    private CardView cardViewShipping;
 
     private void bindingView() {
         bottomNavigationView = findViewById(R.id.home_bottomNavigation);
         btnCart = bottomNavigationView.getMenu().findItem(R.id.cart_Bottomnavigation);
-        btnSetting = bottomNavigationView.getMenu().findItem(R.id.setting_Bottomnavigation);
         btnProfile = bottomNavigationView.getMenu().findItem(R.id.profile_Bottomnavigation);
         btnHome = bottomNavigationView.getMenu().findItem(R.id.home_bottomNavigation);
         profile_image = findViewById(R.id.profile_image);
@@ -81,6 +81,8 @@ public class Profile extends AppCompatActivity {
         btnLogout = findViewById(R.id.profile_logout);
         cvPassword=findViewById(R.id.profile_setting);
         firebaseDatabase = FirebaseDatabase.getInstance();
+        cardViewOrder = findViewById(R.id.profile_oder);
+        cardViewShipping = findViewById(R.id.profile_shipping);
     }
 
     private void bindingAction() {
@@ -97,9 +99,6 @@ public class Profile extends AppCompatActivity {
 //                    case "Profile":
 //                        profileActivity();
 //                        break;
-                    case "Setting":
-                        settingActivity();
-                        break;
                 }
                 return true; // Trả về true để chỉ định rằng sự kiện đã được xử lý
             }
@@ -108,6 +107,18 @@ public class Profile extends AppCompatActivity {
         btnLogout.setOnClickListener(this::logout);
         profile_image.setOnClickListener(this::uploadProfileImg);
         cvPassword.setOnClickListener(this::changePassword);
+        cardViewOrder.setOnClickListener(this::handleCartListView);
+        cardViewShipping.setOnClickListener(this::handleShippingAddressView);
+    }
+
+    private void handleShippingAddressView(View view) {
+        Intent intent = new Intent(this, ListShippingAddress.class);
+        startActivity(intent);
+    }
+
+    private void handleCartListView(View view) {
+        Intent intent = new Intent(this, ListCartAccount.class);
+        startActivity(intent);
     }
 
     private void changePassword(View view) {
