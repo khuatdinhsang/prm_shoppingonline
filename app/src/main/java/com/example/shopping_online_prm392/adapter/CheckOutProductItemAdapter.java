@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.shopping_online_prm392.R;
 import com.example.shopping_online_prm392.model.CardItem;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class CheckOutProductItemAdapter extends RecyclerView.Adapter<CheckOutProductItemAdapter.CheckOutProductViewHolder> {
 
@@ -36,7 +38,10 @@ public class CheckOutProductItemAdapter extends RecyclerView.Adapter<CheckOutPro
     public void onBindViewHolder(@NonNull CheckOutProductViewHolder holder, int position) {
         CardItem cardItem = cardItemList.get(position);
         holder.titleProductName.setText(cardItem.getTitle());
-        holder.titleProductPrice.setText(cardItem.getContent());
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        int ammount = Integer.parseInt(cardItem.getContent());
+        String formattedAmmount = currencyFormat.format(ammount);
+        holder.titleProductPrice.setText(formattedAmmount);
     }
 
     @Override

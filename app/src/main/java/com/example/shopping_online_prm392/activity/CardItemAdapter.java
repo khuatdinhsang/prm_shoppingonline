@@ -16,7 +16,9 @@ import com.example.shopping_online_prm392.R;
 import com.example.shopping_online_prm392.model.CardItem;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public  class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.CardItemViewHolder> {
     private List<CardItem> cardItemList;
@@ -38,7 +40,12 @@ public  class CardItemAdapter extends RecyclerView.Adapter<CardItemAdapter.CardI
     public void onBindViewHolder(@NonNull CardItemViewHolder holder, int position) {
         CardItem cardItem = cardItemList.get(position);
         holder.titleTextView.setText(cardItem.getTitle());
-        holder.contentTextView.setText(cardItem.getContent());
+
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        int ammount = Integer.parseInt(cardItem.getContent());
+        String formattedAmmount = currencyFormat.format(ammount);
+
+        holder.contentTextView.setText(formattedAmmount);
 
         String imageUrl = cardItem.getImage();
         Picasso.get().load(imageUrl)
