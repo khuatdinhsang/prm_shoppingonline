@@ -22,7 +22,6 @@ public class Setting extends AppCompatActivity {
     private void bindingView(){
         bottomNavigationView = findViewById(R.id.home_bottomNavigation);
         btnCart = bottomNavigationView.getMenu().findItem(R.id.cart_Bottomnavigation);
-        btnSetting = bottomNavigationView.getMenu().findItem(R.id.setting_Bottomnavigation);
         btnProfile = bottomNavigationView.getMenu().findItem(R.id.profile_Bottomnavigation);
         btnHome = bottomNavigationView.getMenu().findItem(R.id.home_bottomNavigation);
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -49,8 +48,7 @@ public class Setting extends AppCompatActivity {
                 return true; // Trả về true để chỉ định rằng sự kiện đã được xử lý
             }
         });
-        bottomNavigationView.getMenu().findItem(R.id.setting_Bottomnavigation).setChecked(true);
-        
+
     }
 
     private void homeActivity(){
