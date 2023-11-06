@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class ManagerProduct extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private RecyclerView rcvListProduct;
     private ProductAdapter productAdapter;
+    private Button btnAddProduct;
     private ImageView btnBack;
     private List<Product> listProduct;
     private void bindingView() {
@@ -37,6 +39,7 @@ public class ManagerProduct extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         rcvListProduct = findViewById(R.id.mngProduct_listProduct);
         btnBack=findViewById(R.id.admin_btnBackAccount);
+        btnAddProduct=findViewById(R.id.admin_btnAddNewProduct);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcvListProduct.setLayoutManager(linearLayoutManager);
         productAdapter = new ProductAdapter(listProduct);
@@ -44,7 +47,14 @@ public class ManagerProduct extends AppCompatActivity {
     }
     private void bindingAction() {
         btnBack.setOnClickListener(this::backToHomeAdmin);
+        btnAddProduct.setOnClickListener(this::addNewProduct);
         }
+
+    private void addNewProduct(View view) {
+        Intent intent= new Intent(this,AddProduct.class);
+        startActivity(intent);
+    }
+
     private void backToHomeAdmin(View view) {
         Intent intent= new Intent(this,AdminActivity.class);
         startActivity(intent);
