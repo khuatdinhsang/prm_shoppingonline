@@ -39,7 +39,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.Checkout"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".activity.ProductByCategory"
             android:exported="false" />
