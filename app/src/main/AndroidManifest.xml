@@ -26,15 +26,18 @@
         android:theme="@style/Theme.Shopping_online_prm392"
         tools:targetApi="31">
         <activity
-            android:name=".activity.ManagerProduct"
-            android:exported="false" />
+            android:name=".activity.ViewCartNoCheckOut"
+            android:exported="false"/>
         <activity
-            android:name=".activity.AdminActivity"
+            android:name=".activity.ListCartAccount"
+            android:exported="false"/>
+        <activity
+            android:name=".activity.ListShippingAddress"
             android:exported="false" />
         <activity
             android:name=".activity.Checkout"
-            android:exported="true"
-            android:parentActivityName=".activity.Product" />
+            android:exported="true" >
+        </activity>
         <activity
             android:name=".activity.ProductByCategory"
             android:exported="false" />
@@ -63,11 +66,16 @@
             android:name=".activity.Product"
             android:exported="false" />
         <activity
+            android:name=".activity.AdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ManagerProduct"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.shopping_online_prm392.R;
@@ -16,7 +17,6 @@ import com.example.shopping_online_prm392.model.CardItem;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class Checkout extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -25,10 +25,16 @@ public class Checkout extends AppCompatActivity {
 
     private ImageView btnBack;
     private Button btnPlaceOrder;
+    private EditText edtName;
+    private EditText edtAddress;
+    private EditText edtPhoneNumber;
 
     private void bindingView(){
         btnBack = findViewById(R.id.checkout_backIcon);
         btnPlaceOrder = findViewById(R.id.checkout_order);
+        edtAddress = findViewById(R.id.checkout_edt_address);
+        edtPhoneNumber = findViewById(R.id.checkout_edt_phoneNumber);
+        edtName = findViewById(R.id.checkout_edt_name);
     }
     private  void bindingAction(){
         btnBack.setOnClickListener(this::backToCart);
