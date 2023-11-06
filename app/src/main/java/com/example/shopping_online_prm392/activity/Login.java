@@ -123,7 +123,7 @@ public class Login extends AppCompatActivity {
             Toast.makeText(Login.this, "Login successfully", Toast.LENGTH_SHORT).show();
             Intent intent;
             if (currentAccount.getRole().equals("admin")) {
-                intent = new Intent(this, ManagerAccount.class);
+                intent = new Intent(this, AdminActivity.class);
             } else {
                 intent = new Intent(this, MainActivity.class);
             }

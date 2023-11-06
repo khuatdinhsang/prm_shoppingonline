@@ -154,7 +154,6 @@ public class DetailProduct extends AppCompatActivity {
                 for (DataSnapshot snap : snapshot.getChildren()){
                     carts.add(snap.getValue(Cart.class));
                 }
-
             }
 
             @Override
