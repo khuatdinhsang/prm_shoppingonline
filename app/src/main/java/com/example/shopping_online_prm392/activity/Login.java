@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shopping_online_prm392.MainActivity;
@@ -20,11 +21,17 @@ import com.example.shopping_online_prm392.R;
 import com.example.shopping_online_prm392.common.TableName;
 import com.example.shopping_online_prm392.model.Account;
 import com.example.shopping_online_prm392.utils.Utils;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Login extends AppCompatActivity {
     private EditText edtEmail;
@@ -32,12 +39,12 @@ public class Login extends AppCompatActivity {
     private Button btnRegister;
     private TextView textRegister;
     private List<Account> listAccount;
-    private Utils utils = new Utils();
     private Account currentAccount;
     private FirebaseDatabase firebaseDatabase;
     private CheckBox checkRememberAccount;
 
     private void bindingView() {
+        listAccount= new ArrayList<>();
         edtEmail = findViewById(R.id.login_edtEmail);
         edtPassword = findViewById(R.id.login_edtPassword);
         btnRegister = findViewById(R.id.login_btnLogin);
@@ -45,8 +52,26 @@ public class Login extends AppCompatActivity {
         checkRememberAccount = findViewById(R.id.login_rememberAccount);
         firebaseDatabase = FirebaseDatabase.getInstance();
     }
+    private void getListAccount() {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = firebaseDatabase.getReference(TableName.ACCOUNT_TABLE);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Account account = dataSnapshot.getValue(Account.class);
+                    listAccount.add(account);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
 
     private void bindingAction() {
+        getListAccount();
         btnRegister.setOnClickListener(this::loginAccount);
         textRegister.setOnClickListener(this::registerAccount);
         checkRememberAccount.setOnCheckedChangeListener(this::rememberAccount);
@@ -105,9 +130,9 @@ public class Login extends AppCompatActivity {
     }
 
     private void loginAccount(View view) {
-
        String email = edtEmail.getText().toString().trim();
       String  password = edtPassword.getText().toString().trim();
+      Log.i("111",listAccount.toString());
         boolean check = false;
         for (int i = 0; i < listAccount.size(); i++) {
             if (listAccount.get(i).getEmail().equals(email) && listAccount.get(i).getPassword().equals(password)) {
@@ -137,7 +162,6 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        listAccount = utils.getListAccount();
         bindingView();
         getReferencesData();
         bindingAction();

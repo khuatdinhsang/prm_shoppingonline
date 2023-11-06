@@ -1,5 +1,7 @@
 package com.example.shopping_online_prm392.model;
 
+import java.util.UUID;
+
 public class Product {
     private String id;
     private String name;
@@ -13,8 +15,8 @@ public class Product {
     public Product() {
     }
 
-    public Product(String id, String name, int quantity, int price, String size, String image, String category, String description) {
-        this.id = id;
+    public Product( String name, int quantity, int price, String size, String image, String category, String description) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.quantity = quantity;
         this.price = price;
