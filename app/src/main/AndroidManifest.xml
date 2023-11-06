@@ -54,9 +54,6 @@
             android:name=".activity.Profile"
             android:exported="false" />
         <activity
-            android:name=".activity.ManagerCategory"
-            android:exported="false" />
-        <activity
             android:name=".activity.Register"
             android:exported="false" />
         <activity
@@ -67,6 +64,12 @@
             android:exported="false" />
         <activity
             android:name=".activity.Product"
+            android:exported="false" />
+        <activity
+            android:name=".activity.AdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ManagerProduct"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

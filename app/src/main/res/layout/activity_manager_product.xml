@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ManagerCategory">
+    tools:context=".activity.ManagerProduct">
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="326dp"
         android:layout_height="81dp"
-        android:layout_marginTop="120dp"
-        android:text="@string/mangerCategory"
+        android:layout_marginTop="104dp"
+        android:text="ManagerProduct"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.223"
+        app:layout_constraintHorizontal_bias="0.235"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,15 +34,25 @@
         app:layout_constraintGuide_begin="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mngCategory_listCategory"
+        android:id="@+id/mngProduct_listProduct"
         android:layout_width="372dp"
-        android:layout_height="219dp"
+        android:layout_height="450dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineManager"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineManager2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.472"
         tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/admin_btnBackAccount"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineManager"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineManager2"
+        app:srcCompat="@drawable/baseline_arrow_back_ios_new_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
