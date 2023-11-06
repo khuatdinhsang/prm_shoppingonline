@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Product extends AppCompatActivity {
+public class    Product extends AppCompatActivity {
 
     private FirebaseDatabase firebaseDatabase;
     private BottomNavigationView bottomNavigationView ;

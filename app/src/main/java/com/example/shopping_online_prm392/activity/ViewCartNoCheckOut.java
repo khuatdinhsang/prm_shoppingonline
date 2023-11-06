@@ -45,7 +45,7 @@ public class ViewCartNoCheckOut extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         cartList = new ArrayList<>();
-        Product p = new Product("1","ao",100,100000,"S","https://mikenco.vn/wp-content/uploads/2021/11/244756349_571633690836444_985431820006464764_n-1024x1024.jpg","250606aa-7960-11ee-b962-0242ac120002","dep");
+        Product p = new Product("ao",100,100000,"S","https://mikenco.vn/wp-content/uploads/2021/11/244756349_571633690836444_985431820006464764_n-1024x1024.jpg","250606aa-7960-11ee-b962-0242ac120002","dep");
         Cart c = new Cart("12",1000000,12,p);
         cartList.add(c);
         cartList.add(c);

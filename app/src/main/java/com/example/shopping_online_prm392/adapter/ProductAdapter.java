@@ -56,7 +56,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.itemDescription.setText("Description: " + product.getDescription());
         holder.itemPrice.setText("Price: " + product.getPrice());
         holder.itemQuantity.setText("Quantity: " + product.getQuantity());
-        holder.itemCategory.setText("Category: " + getNameCategory(product.getCategory()));
+        holder.itemCategory.setText("Category: " + (product.getCategory()));
         Picasso.get().load(product.getImage())
                 .fit()
                 .centerCrop()
