@@ -38,15 +38,22 @@ import com.example.shopping_online_prm392.R;
 import com.example.shopping_online_prm392.common.ShowDialog;
 import com.example.shopping_online_prm392.common.TableName;
 import com.example.shopping_online_prm392.model.Account;
+import com.example.shopping_online_prm392.model.CardItem;
+import com.example.shopping_online_prm392.model.Cart;
+import com.example.shopping_online_prm392.model.Payment;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.normal.TedPermission;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +76,9 @@ public class Profile extends AppCompatActivity {
     private TextView changePas_showErr;
     private CardView cardViewOrder;
     private CardView cardViewShipping;
+    private List<Payment> accountPayment;
+    private TextView totalOrderUI;
+    private TextView totalShippingUI;
 
     private void bindingView() {
         bottomNavigationView = findViewById(R.id.home_bottomNavigation);
@@ -83,6 +93,9 @@ public class Profile extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         cardViewOrder = findViewById(R.id.profile_oder);
         cardViewShipping = findViewById(R.id.profile_shipping);
+        totalOrderUI = findViewById(R.id.profile_oder_totalOrder);
+        totalShippingUI = findViewById(R.id.profile_shipping_totalShipping);
+        accountPayment = new ArrayList<>();
     }
 
     private void bindingAction() {
@@ -338,10 +351,42 @@ public class Profile extends AppCompatActivity {
 //        initConfig();
         getDataSharedPreferences();
         bindingAction();
+        GetAllPayment();
 
     }
-    private void initConfig() {
         //upload cloud image
 
-    }
+//    private void initConfig() {
+//        //upload cloud image
+//        Map config = new HashMap();
+//        config.put("cloud_name", "dzak7lfgs");
+//        config.put("api_key","675618315582934");
+//        config.put("api_secret","h6oNEO66omG3LJ_WRqL9-f3LGWk");
+////        config.put("secure", true);
+//        MediaManager.init(this, config);
+//    }
+        private void GetAllPayment(){
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = firebaseDatabase.getReference(TableName.PAYMENT_TABLE);
+            myRef.child(currentAccount.getId()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (accountPayment != null) {
+                        accountPayment.clear();
+                    }
+                    for (DataSnapshot snap : snapshot.getChildren()) {
+                        Payment p = snap.getValue(Payment.class);
+                        accountPayment.add(p);
+                    }
+                    totalOrderUI.setText("Already have " + Integer.toString(accountPayment.size()) + " orders");
+                    totalShippingUI.setText(Integer.toString(accountPayment.size()) + " address");
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
 }
