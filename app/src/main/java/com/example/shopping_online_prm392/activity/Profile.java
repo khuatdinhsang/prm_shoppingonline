@@ -185,55 +185,62 @@ public class Profile extends AppCompatActivity {
     @Override
     protected  void onActivityResult(int requestCode, int  resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Map config = new HashMap();
+        config.put("cloud_name", "dzak7lfgs");
+        config.put("api_key","675618315582934");
+        config.put("api_secret","h6oNEO66omG3LJ_WRqL9-f3LGWk");
+//        config.put("secure", true);
+        MediaManager.init(this, config);
         Uri uri=data.getData();
         if (uri!=null){
-            profile_image.setImageURI(uri);
-            currentAccount.setImage(String.valueOf(uri));
-            DatabaseReference myRef = firebaseDatabase.getReference(TableName.ACCOUNT_TABLE);
-            myRef.child(currentAccount.getId()).setValue(currentAccount);
-            SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            Gson gson = new Gson();
-            String userJson = gson.toJson(currentAccount);
-            editor.putString("currentAccount", userJson);
-            editor.apply();
-            showMessage(Profile.this,"Avatar change Successfully");
-//            MediaManager.get().upload(uri).callback(new UploadCallback() {
-//                @Override
-//                public void onStart(String requestId) {
-//                    Log.d(TAG, "onStart: "+"started");
-//                }
-//
-//                @Override
-//                public void onProgress(String requestId, long bytes, long totalBytes) {
-//                    Log.d(TAG, "onStart: "+"uploading");
-//                }
-//
-//                @Override
-//                public void onSuccess(String requestId, Map resultData) {
-//                    profile_image.setImageURI(uri);
-//                    currentAccount.setImage(String.valueOf(Uri.parse(resultData.get("url").toString())));
-//                    DatabaseReference myRef = firebaseDatabase.getReference(TableName.ACCOUNT_TABLE);
-//                    myRef.child(currentAccount.getId()).setValue(currentAccount);
-//                    SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    Gson gson = new Gson();
-//                    String userJson = gson.toJson(currentAccount);
-//                    editor.putString("currentAccount", userJson);
-//                    editor.apply();
-//                    showMessage(Profile.this,"Avatar change Successfully");
-//                }
-//
-//                @Override
-//                public void onError(String requestId, ErrorInfo error) {
-//                    Log.d(TAG, "onStart: "+error);
-//                }
-//
-//                @Override
-//                public void onReschedule(String requestId, ErrorInfo error) {
-//                    Log.d(TAG, "onStart: "+error);
-//                }
-//            }).dispatch();
+//            profile_image.setImageURI(uri);
+//            currentAccount.setImage(String.valueOf(uri));
+//            DatabaseReference myRef = firebaseDatabase.getReference(TableName.ACCOUNT_TABLE);
+//            myRef.child(currentAccount.getId()).setValue(currentAccount);
+//            SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            Gson gson = new Gson();
+//            String userJson = gson.toJson(currentAccount);
+//            editor.putString("currentAccount", userJson);
+//            editor.apply();
+//            showMessage(Profile.this,"Avatar change Successfully");
+            MediaManager.get().upload(uri).callback(new UploadCallback() {
+                @Override
+                public void onStart(String requestId) {
+                    Log.d(TAG, "onStart: "+"started");
+                }
+
+                @Override
+                public void onProgress(String requestId, long bytes, long totalBytes) {
+                    Log.d(TAG, "onStart: "+"uploading");
+                }
+
+                @Override
+                public void onSuccess(String requestId, Map resultData) {
+                    Log.i("220",resultData.toString());
+                    profile_image.setImageURI(uri);
+                    currentAccount.setImage((String) resultData.get("secure_url"));
+                    DatabaseReference myRef = firebaseDatabase.getReference(TableName.ACCOUNT_TABLE);
+                    myRef.child(currentAccount.getId()).setValue(currentAccount);
+                    SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    Gson gson = new Gson();
+                    String userJson = gson.toJson(currentAccount);
+                    editor.putString("currentAccount", userJson);
+                    editor.apply();
+                    showMessage(Profile.this,"Avatar change Successfully");
+                }
+
+                @Override
+                public void onError(String requestId, ErrorInfo error) {
+                    Log.d(TAG, "onStart: "+error);
+                }
+
+                @Override
+                public void onReschedule(String requestId, ErrorInfo error) {
+                    Log.d(TAG, "onStart: "+error);
+                }
+            }).dispatch();
 
 
         } else{
@@ -258,7 +265,6 @@ public class Profile extends AppCompatActivity {
                         loginActivity();
                         showMessage(Profile.this, "Logout Successfully!");
                     }
-
                     @Override
                     public void onNoClicked() {
 
@@ -271,14 +277,15 @@ public class Profile extends AppCompatActivity {
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
         String accountJson = sharedPreferences.getString("currentAccount", "");
+        Log.i("278","aa");
         if (accountJson.isEmpty()) {
             loginActivity();
         } else {
             currentAccount = gson.fromJson(accountJson, Account.class);
+            Log.i("279",currentAccount.toString());
+            Log.i("285",currentAccount.getImage());
             Picasso.get()
                     .load(currentAccount.getImage())
-                    .placeholder(R.drawable.default_image)
-                    .error(R.drawable.error_image)
                     .into(profile_image);
             String email = currentAccount.getEmail();
             String role = currentAccount.getRole();
@@ -333,14 +340,8 @@ public class Profile extends AppCompatActivity {
         bindingAction();
 
     }
+    private void initConfig() {
+        //upload cloud image
 
-//    private void initConfig() {
-//        //upload cloud image
-//        Map config = new HashMap();
-//        config.put("cloud_name", "dzak7lfgs");
-//        config.put("api_key","675618315582934");
-//        config.put("api_secret","h6oNEO66omG3LJ_WRqL9-f3LGWk");
-////        config.put("secure", true);
-//        MediaManager.init(this, config);
-//    }
+    }
 }
