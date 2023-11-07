@@ -1,10 +1,15 @@
 package com.example.shopping_online_prm392.activity;
 
+import static com.example.shopping_online_prm392.common.ShowDialog.showMessage;
+
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shopping_online_prm392.MainActivity;
@@ -32,24 +38,40 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class Login extends AppCompatActivity {
     private EditText edtEmail;
-    private EditText edtPassword;
-    private Button btnRegister;
+    private EditText edtPassword,edtForgotEmail;
+    private Button btnRegister, btnResetPassword, btnCancel;
     private TextView textRegister;
+    private Utils u;
     private List<Account> listAccount;
     private Account currentAccount;
     private FirebaseDatabase firebaseDatabase;
     private CheckBox checkRememberAccount;
 
+    private TextView textForgotPassword;
+
     private void bindingView() {
+        u= new Utils();
         listAccount= new ArrayList<>();
         edtEmail = findViewById(R.id.login_edtEmail);
         edtPassword = findViewById(R.id.login_edtPassword);
         btnRegister = findViewById(R.id.login_btnLogin);
         textRegister = findViewById(R.id.login_textRegister);
         checkRememberAccount = findViewById(R.id.login_rememberAccount);
+        textForgotPassword=findViewById(R.id.login_forgotPassword);
         firebaseDatabase = FirebaseDatabase.getInstance();
     }
     private void getListAccount() {
@@ -75,6 +97,90 @@ public class Login extends AppCompatActivity {
         btnRegister.setOnClickListener(this::loginAccount);
         textRegister.setOnClickListener(this::registerAccount);
         checkRememberAccount.setOnCheckedChangeListener(this::rememberAccount);
+        textForgotPassword.setOnClickListener(this::forgotPassword);
+    }
+
+    private void forgotPassword(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+        LayoutInflater inflater = Login.this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_forgotpassword, null);
+        builder.setView(dialogView);
+        builder.setPositiveButton("Reset",null);
+        builder.setNegativeButton("Cancel",null);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        edtForgotEmail=dialogView.findViewById(R.id.forgot_email) ;
+        Button positiveButton= alertDialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String emailForgot=String.valueOf(edtForgotEmail.getText());
+                boolean checkExist=false;
+                Account account=new Account();
+                for(Account a:  listAccount){
+                    if (a.getEmail().equals(emailForgot)) {
+                        checkExist = true;
+                        account=a;
+                        break;
+                    }
+                }
+                if (!u.isValidEmail(emailForgot)){
+                    Toast.makeText(Login.this, "Wrong email format", Toast.LENGTH_SHORT).show();
+                } else if(!checkExist){
+                    Toast.makeText(Login.this, "Email no exist in app", Toast.LENGTH_SHORT).show();
+                } else{
+                    try {
+                        String stringSenderEmail = "sangkdhe161711@gmail.com";
+                        String stringPasswordSenderEmail = "fsmb gwef jkqo belh";
+                        String stringHost = "smtp.gmail.com";
+                        Properties properties = System.getProperties();
+                        properties.put("mail.smtp.host", stringHost);
+                        properties.put("mail.smtp.port", "465");
+                        properties.put("mail.smtp.ssl.enable", "true");
+                        properties.put("mail.smtp.auth", "true");
+                        javax.mail.Session session = Session.getInstance(properties, new Authenticator() {
+                            @Override
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication(stringSenderEmail, stringPasswordSenderEmail);
+                            }
+                        });
+                        MimeMessage mimeMessage = new MimeMessage(session);
+                        mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailForgot));
+                        mimeMessage.setSubject("Reset Password");
+                        String newPassword=u.generateRandomString(6);
+                        mimeMessage.setText("Mật khẩu mới của bạn là: "+ newPassword);
+
+                        account.setPassword(newPassword);
+                        Log.i("154",account.toString());
+                        DatabaseReference myRef = firebaseDatabase.getReference(TableName.ACCOUNT_TABLE);
+                        myRef.child(account.getId()).setValue(account);
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Transport.send(mimeMessage);
+                                } catch (MessagingException e) {
+                                    Log.i("157",e.toString());
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                        thread.start();
+                        Toast.makeText(Login.this, "Vui lòng truy cập gmail để lấy mật khẩu mới !!", Toast.LENGTH_SHORT).show();
+
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                    alertDialog.dismiss();
+                }
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
     }
 
     private void rememberAccount(CompoundButton compoundButton, boolean isChecked) {
