@@ -1,5 +1,7 @@
 package com.example.shopping_online_prm392.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shopping_online_prm392.MainActivity;
 import com.example.shopping_online_prm392.R;
+import com.example.shopping_online_prm392.activity.ManagerProduct;
 import com.example.shopping_online_prm392.common.ShowDialog;
 import com.example.shopping_online_prm392.common.TableName;
 import com.example.shopping_online_prm392.model.Category;
@@ -23,6 +27,7 @@ import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
     private List<Product> listProduct;
+    private Context context;
     private List<Category> listCategory;
     private Utils u= new Utils();
     private FirebaseDatabase firebaseDatabase;
@@ -71,7 +76,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                             @Override
                             public void onYesClicked() {
                                 u.removeObject(TableName.PRODUCT_TABLE,product.getId());
-                                ShowDialog.showMessage(v.getContext(), "Delete Product Successfully!");
+                                ShowDialog.showMessage(context, "Delete Product Successfully!");
+                                Intent intent = new Intent(context, ManagerProduct.class);
+                                context.startActivity(intent);
 
                             }
                             @Override
