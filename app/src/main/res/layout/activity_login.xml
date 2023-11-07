@@ -5,16 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.Login">
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="173dp"
         android:layout_height="85dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="60dp"
         android:text="@string/login"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,14 +68,14 @@
         android:id="@+id/login_btnLogin"
         android:layout_width="372dp"
         android:layout_height="54dp"
-        android:layout_marginTop="148dp"
+        android:layout_marginTop="232dp"
         android:background="@drawable/button_primary"
         android:radius="5dp"
         android:text="@string/login"
         android:textColor="#F8F8F8"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_edtPassword"
         tools:ignore="MissingConstraints" />
@@ -92,20 +93,33 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/login_edtPassword"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.746" />
 
     <CheckBox
         android:id="@+id/login_rememberAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/remember_account"
+        android:textColor="#858383"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/login_textRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        android:textColor="#858383"
-        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/login_edtPassword"
-        app:layout_constraintVertical_bias="0.32" />
+        app:layout_constraintVertical_bias="0.27" />
+
+    <TextView
+        android:id="@+id/login_forgotPassword"
+        android:layout_width="255dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="4dp"
+        android:text="Forgot password"
+        android:textColor="#858383"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/login_rememberAccount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
