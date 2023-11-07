@@ -29,9 +29,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class DetailProduct extends AppCompatActivity {
@@ -112,16 +114,18 @@ public class DetailProduct extends AppCompatActivity {
     }
 
     private void actionBack(View view) {
-        Intent intent = new Intent(this, com.example.shopping_online_prm392.activity.Product.class);
-        startActivity(intent);
+       super.onBackPressed();
+       finish();
     }
 
     private void AddToCart(){
         Log.d("SizeCart", "AddToCart: " + carts.size());
         Cart cartAddItem = new Cart(product.getId(),product.getPrice(),1,product);
+
         Boolean isProductExistInCart = false;
         for (Cart cart : carts){
-            if(cart.getId() == cartAddItem.getId() && cart.getProduct().getSize() == cartAddItem.getProduct().getSize()){
+            if(cart.getId().equals(cartAddItem.getId()) && cart.getProduct().getSize() == cartAddItem.getProduct().getSize()){
+                Log.d("cart", "AddToCart: " + cart.getId() + "cartAdd" + cartAddItem.getId());
                 cart.setQuantity(cart.getQuantity() + 1);
                 cart.setPrice(cart.getProduct().getPrice() * cart.getQuantity());
                 isProductExistInCart = true;
@@ -138,10 +142,11 @@ public class DetailProduct extends AppCompatActivity {
             myRef.child(accountEmail).child(pathObject).setValue(c, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                    Toast.makeText(DetailProduct.this, "Add to cart success !", Toast.LENGTH_SHORT).show();
+
                 }
             });
         }
+        Toast.makeText(this, "Add Cart Success !", Toast.LENGTH_SHORT).show();
     }
     private void GetAllCartItem(){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -186,7 +191,10 @@ public class DetailProduct extends AppCompatActivity {
     private void SetDataForProductDetail(com.example.shopping_online_prm392.model.Product p){
         Log.d("productDetail", "SetDataForProductDetail: " + p.getName());
         productName.setText(p.getName());
-        productPrice.setText(Integer.toString(p.getPrice()));
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        int ammount = p.getPrice();
+        String formattedAmmount = currencyFormat.format(ammount);
+        productPrice.setText(formattedAmmount);
         String imageUrl = p.getImage();
         Picasso.get().load(imageUrl)
                 .placeholder(R.drawable.default_image)

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shopping_online_prm392.R;
 import com.example.shopping_online_prm392.adapter.CartItemAdapter;
@@ -26,8 +27,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CartDetail extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -68,19 +71,33 @@ public class CartDetail extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         cartItemList = new ArrayList<>();
-        cartItemAdapter = new CartItemAdapter(cartItemList);
+        cartItemAdapter = new CartItemAdapter(cartItemList, new CartItemAdapter.IClickDelete() {
+            @Override
+            public void OnClickDelete(Cart cart) {
+                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = firebaseDatabase.getReference(TableName.CART_TABLE);
+                String pathObject = cart.getId() + "size" +cart.getProduct().getSize();
+                myRef.child(accountEmail).child(pathObject).removeValue(new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        Toast.makeText(CartDetail.this, "Remove Product Success !", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+        });
         recyclerView.setAdapter(cartItemAdapter);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_detail);
+        getDataSharedPreferences();
         bindingView();
         bindingAction();
         GetAllCartItem();
     }
     private void GetAllCartItem(){
-        getDataSharedPreferences();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference(TableName.CART_TABLE);
         myRef.child(accountEmail).addChildEventListener(new ChildEventListener() {
@@ -91,7 +108,10 @@ public class CartDetail extends AppCompatActivity {
                     cartItemList.add(cartItem);
                     cartItemAdapter.notifyDataSetChanged();
                     price += cartItem.getPrice();
-                    totalPrice.setText(Integer.toString(price));
+                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+                    int ammount = price;
+                    String formattedAmmount = currencyFormat.format(ammount);
+                    totalPrice.setText(formattedAmmount);
                 }
             }
 
@@ -102,7 +122,23 @@ public class CartDetail extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                Cart c = snapshot.getValue(Cart.class);
+                if( c == null){
+                    return;
+                }
+                for (Cart cart : cartItemList){
+                    if(cart.getId().equals(c.getId()) && c.getProduct().getSize().equals(cart.getProduct().getSize())){
+                        price -= c.getPrice();
+                        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+                        int ammount = price;
+                        String formattedAmmount = currencyFormat.format(ammount);
+                        totalPrice.setText(formattedAmmount);
+                        cartItemList.remove(cart);
+                        break;
+                    }
+                }
 
+                cartItemAdapter.notifyDataSetChanged();
             }
 
             @Override
