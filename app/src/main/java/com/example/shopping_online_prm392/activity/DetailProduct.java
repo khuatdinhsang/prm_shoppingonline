@@ -117,57 +117,62 @@ public class DetailProduct extends AppCompatActivity {
        super.onBackPressed();
        finish();
     }
-
     private void AddToCart(){
-        Log.d("SizeCart", "AddToCart: " + carts.size());
-        Cart cartAddItem = new Cart(product.getId(),product.getPrice(),1,product);
+        if (accountEmail==null) {
+            Intent intent = new Intent (this, Login.class);
+            startActivity(intent);
+        } else {
+            Cart cartAddItem = new Cart(product.getId(), product.getPrice(), 1, product);
 
-        Boolean isProductExistInCart = false;
-        for (Cart cart : carts){
-            if(cart.getId().equals(cartAddItem.getId()) && cart.getProduct().getSize() == cartAddItem.getProduct().getSize()){
-                Log.d("cart", "AddToCart: " + cart.getId() + "cartAdd" + cartAddItem.getId());
-                cart.setQuantity(cart.getQuantity() + 1);
-                cart.setPrice(cart.getProduct().getPrice() * cart.getQuantity());
-                isProductExistInCart = true;
-                break;
-            }
-        }
-        if(!isProductExistInCart){
-            carts.add(cartAddItem);
-        }
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = firebaseDatabase.getReference(TableName.CART_TABLE);
-        for (Cart c : carts){
-            String pathObject = String.valueOf(c.getId() + "size" + c.getProduct().getSize());
-            myRef.child(accountEmail).child(pathObject).setValue(c, new DatabaseReference.CompletionListener() {
-                @Override
-                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-
+            Boolean isProductExistInCart = false;
+            for (Cart cart : carts) {
+                if (cart.getId().equals(cartAddItem.getId()) && cart.getProduct().getSize() == cartAddItem.getProduct().getSize()) {
+                    Log.d("cart", "AddToCart: " + cart.getId() + "cartAdd" + cartAddItem.getId());
+                    cart.setQuantity(cart.getQuantity() + 1);
+                    cart.setPrice(cart.getProduct().getPrice() * cart.getQuantity());
+                    isProductExistInCart = true;
+                    break;
                 }
-            });
+            }
+            if (!isProductExistInCart) {
+                carts.add(cartAddItem);
+            }
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = firebaseDatabase.getReference(TableName.CART_TABLE);
+            for (Cart c : carts) {
+                String pathObject = String.valueOf(c.getId() + "size" + c.getProduct().getSize());
+                myRef.child(accountEmail).child(pathObject).setValue(c, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+
+                    }
+                });
+            }
+            Toast.makeText(this, "Add Cart Success !", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(this, "Add Cart Success !", Toast.LENGTH_SHORT).show();
     }
     private void GetAllCartItem(){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference(TableName.CART_TABLE);
         getDataSharedPreferences();
-        myRef.child(accountEmail).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(carts != null){
-                    carts.clear();
+        if(accountEmail!=null) {
+            myRef.child(accountEmail).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (carts != null) {
+                        carts.clear();
+                    }
+                    for (DataSnapshot snap : snapshot.getChildren()) {
+                        carts.add(snap.getValue(Cart.class));
+                    }
                 }
-                for (DataSnapshot snap : snapshot.getChildren()){
-                    carts.add(snap.getValue(Cart.class));
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+            });
+        }
     }
     private void GetDetailProduct(){
         Intent intent = getIntent();

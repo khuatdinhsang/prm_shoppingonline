@@ -24,7 +24,7 @@ import com.squareup.picasso.Picasso;
 public class AdminActivity extends AppCompatActivity {
     private Button btnViewAccount;
     private Button btnViewProduct;
-    private Button btnLogout;
+    private Button btnLogout ,btnViewOrder;
     private TextView txtEmail;
     private ImageView imgAvatar;
 
@@ -38,12 +38,19 @@ public class AdminActivity extends AppCompatActivity {
         btnLogout = findViewById(R.id.admin_logout);
         txtEmail = findViewById(R.id.admin_email);
         imgAvatar = findViewById(R.id.admin_avatar);
+        btnViewOrder=findViewById(R.id.admin_viewOrder);
     }
 
     private void bindingAction() {
         btnViewAccount.setOnClickListener(this::managerAccount);
         btnViewProduct.setOnClickListener(this::managerProduct);
+        btnViewOrder.setOnClickListener(this::managerOrder);
         btnLogout.setOnClickListener(this::logout);
+    }
+
+    private void managerOrder(View view) {
+        Intent intent = new Intent(this, ManagerOrder.class);
+        startActivity(intent);
     }
 
     private void logout(View view) {
