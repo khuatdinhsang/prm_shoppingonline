@@ -71,22 +71,24 @@ public class CartDetail extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         cartItemList = new ArrayList<>();
-        cartItemAdapter = new CartItemAdapter(cartItemList, new CartItemAdapter.IClickDelete() {
-            @Override
-            public void OnClickDelete(Cart cart) {
-                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = firebaseDatabase.getReference(TableName.CART_TABLE);
-                String pathObject = cart.getId() + "size" +cart.getProduct().getSize();
-                myRef.child(accountEmail).child(pathObject).removeValue(new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                        Toast.makeText(CartDetail.this, "Remove Product Success !", Toast.LENGTH_SHORT).show();
+        if(accountEmail!=null) {
+            cartItemAdapter = new CartItemAdapter(cartItemList, new CartItemAdapter.IClickDelete() {
+                @Override
+                public void OnClickDelete(Cart cart) {
+                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = firebaseDatabase.getReference(TableName.CART_TABLE);
+                    String pathObject = cart.getId() + "size" + cart.getProduct().getSize();
+                    myRef.child(accountEmail).child(pathObject).removeValue(new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                            Toast.makeText(CartDetail.this, "Remove Product Success !", Toast.LENGTH_SHORT).show();
 
-                    }
-                });
-            }
-        });
-        recyclerView.setAdapter(cartItemAdapter);
+                        }
+                    });
+                }
+            });
+            recyclerView.setAdapter(cartItemAdapter);
+        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,64 +102,65 @@ public class CartDetail extends AppCompatActivity {
     private void GetAllCartItem(){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference(TableName.CART_TABLE);
-        myRef.child(accountEmail).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Cart cartItem = snapshot.getValue(Cart.class);
-                if(cartItem != null){
-                    cartItemList.add(cartItem);
-                    cartItemAdapter.notifyDataSetChanged();
-                    price += cartItem.getPrice();
-                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-                    int ammount = price;
-                    String formattedAmmount = currencyFormat.format(ammount);
-                    totalPrice.setText(formattedAmmount);
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                Cart c = snapshot.getValue(Cart.class);
-                if( c == null){
-                    return;
-                }
-                for (Cart cart : cartItemList){
-                    if(cart.getId().equals(c.getId()) && c.getProduct().getSize().equals(cart.getProduct().getSize())){
-                        price -= c.getPrice();
+        if (accountEmail!=null) {
+            myRef.child(accountEmail).addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    Cart cartItem = snapshot.getValue(Cart.class);
+                    if (cartItem != null) {
+                        cartItemList.add(cartItem);
+                        cartItemAdapter.notifyDataSetChanged();
+                        price += cartItem.getPrice();
                         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
                         int ammount = price;
                         String formattedAmmount = currencyFormat.format(ammount);
                         totalPrice.setText(formattedAmmount);
-                        cartItemList.remove(cart);
-                        break;
                     }
                 }
 
-                cartItemAdapter.notifyDataSetChanged();
-            }
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                }
 
-            }
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                    Cart c = snapshot.getValue(Cart.class);
+                    if (c == null) {
+                        return;
+                    }
+                    for (Cart cart : cartItemList) {
+                        if (cart.getId().equals(c.getId()) && c.getProduct().getSize().equals(cart.getProduct().getSize())) {
+                            price -= c.getPrice();
+                            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+                            int ammount = price;
+                            String formattedAmmount = currencyFormat.format(ammount);
+                            totalPrice.setText(formattedAmmount);
+                            cartItemList.remove(cart);
+                            break;
+                        }
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    cartItemAdapter.notifyDataSetChanged();
+                }
 
-            }
-        });
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
     private void getDataSharedPreferences() {
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = getSharedPreferences("Account", MODE_PRIVATE);
         String accountJson = sharedPreferences.getString("currentAccount", "");
         if (accountJson.isEmpty()) {
-
         } else {
 
             Account acc = gson.fromJson(accountJson, Account.class);

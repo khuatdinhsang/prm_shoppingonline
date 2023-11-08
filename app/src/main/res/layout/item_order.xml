@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_list_order"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="#FFFFFF"
+    android:layout_margin="8dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/item_product_list"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_order_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BAROCCO KNIT TSHIRT "
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/item_order_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BAROCCO KNIT TSHIRT "
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/item_order_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BAROCCO KNIT TSHIRT "
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/item_order_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BAROCCO KNIT TSHIRT "
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/item_order_totalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BAROCCO KNIT TSHIRT "
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/item_order_createAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BAROCCO KNIT TSHIRT "
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
